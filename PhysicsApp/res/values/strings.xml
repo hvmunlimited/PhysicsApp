@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, Main!</string>
-    <string name="app_name">PhysicsApp</string>
+    <string name="app_name">Physics App</string>
+
+    <!-- Measurements -->
+    <string name="measurements">Målinger</string>
+    <string name="sound">Lyd</string>
+    <string name="acceleration">Acceleration</string>
+    <string name="fourier">Fourier Kurve</string>
+    <string name="light">Lys</string>
+    <string name="magnet">Magnetfelt</string>
+
+    <!-- Tools -->
+    <string name="tools">Værktøjer</string>
+    <string name="compass">Kompas</string>
+    <string name="spiritlevel">Vatterpas</string>
+    <string name="stopwatch">Stopur</string>
+    <string name="converter">Omregner</string>
+    <string name="flash">Lommelygte</string>
+
+    <!-- Log -->
+    <string name="log">Arkiv</string>
 
 </resources>
