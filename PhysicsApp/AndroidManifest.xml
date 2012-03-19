@@ -19,9 +19,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MeasureActivity" >
+        <activity android:name=".AccActivity" >
         </activity>
-        <activity android:name=".ToolsActivity" >
+        <activity android:name=".LightActivity" >
+        </activity>
+        <activity android:name=".SoundActivity" >
+        </activity>
+        <activity android:name=".FourierActivity" >
+        </activity>
+        <activity android:name=".MagnetActivity" >
+        </activity>
+        <activity android:name=".FlashActivity" >
+        </activity>
+        <activity android:name=".CompassActivity" >
+        </activity>
+        <activity android:name=".ClockActivity" >
+        </activity>
+        <activity android:name=".OsciActivity" >
+        </activity>
+        <activity android:name=".ConvertActivity" >
+        </activity>
+        <activity android:name=".AngleActivity" >
         </activity>
         <activity android:name=".LogActivity" >
         </activity>
