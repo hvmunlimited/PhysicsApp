@@ -1,23 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/tabhost"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/table"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="#efefef"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+    <TableRow
+        android:id="@+id/tableRow0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal" >
 
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/acceleration"
+            style="@style/Icons"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/acc"
+            android:text="@string/acceleration" />
 
-        <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-    </LinearLayout>
+        <TextView
+            android:id="@+id/sound"
+            style="@style/Icons"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/mic"
+            android:text="@string/sound" />
 
-</TabHost>
+        <TextView
+            android:id="@+id/light"
+            style="@style/Icons"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/light"
+            android:text="@string/light" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
+        android:gravity="center_horizontal" >
+
+        <TextView
+            android:id="@+id/magnet"
+            style="@style/Icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/magnet"
+            android:text="@string/magnet" />
+
+        <TextView
+            android:id="@+id/fourier"
+            style="@style/Icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/osci"
+            android:text="@string/fourier" />
+
+        <TextView
+            android:id="@+id/osci"
+            style="@style/Icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/osci"
+            android:text="@string/osci" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
+        android:gravity="center_horizontal" >
+
+        <TextView
+            android:id="@+id/imageView6"
+            style="@style/Icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/compass"
+            android:text="@string/compass" />
+
+        <TextView
+            android:id="@+id/imageView7"
+            style="@style/Icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/clock"
+            android:text="@string/stopwatch" />
+
+        <TextView
+            android:id="@+id/imageView8"
+            style="@style/Icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/flash"
+            android:text="@string/flash" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
+        android:gravity="center_horizontal" >
+
+        <TextView
+            android:id="@+id/convert"
+            style="@style/Icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/convert"
+            android:text="@string/converter" />
+
+        <TextView
+            android:id="@+id/angle"
+            style="@style/Icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/angle"
+            android:text="@string/spiritlevel" />
+
+        <TextView
+            android:id="@+id/log"
+            style="@style/Icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="1dp"
+            android:drawableTop="@drawable/log"
+            android:text="@string/log" />
+    </TableRow>
+
+</TableLayout>

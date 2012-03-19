@@ -10,6 +10,7 @@
     <string name="fourier">Fourier Kurve</string>
     <string name="light">Lys</string>
     <string name="magnet">Magnetfelt</string>
+    <string name="osci">Oscilator</string>
 
     <!-- Tools -->
     <string name="tools">Værktøjer</string>
@@ -21,5 +22,9 @@
 
     <!-- Log -->
     <string name="log">Arkiv</string>
+    <string name="no_item">No Item</string>
+    <string name="no_image">No Image</string>
+    <string name="arrow">Arrow</string>
+    <string name="date_format">TT:MM:SS, DD-MM-YYYY</string>
 
 </resources>
