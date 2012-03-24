@@ -1,5 +1,9 @@
 package dk.pless84.physics;
 
+import dk.pless84.physics.clock.ClockActivity;
+import dk.pless84.physics.compass.CompassActivity;
+import dk.pless84.physics.flash.FlashActivity;
+import dk.pless84.physics.log.LogActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

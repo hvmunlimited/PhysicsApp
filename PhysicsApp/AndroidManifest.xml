@@ -6,12 +6,36 @@
 
     <uses-sdk android:minSdkVersion="7" />
 
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.compass"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.gyroscope"
+        android:required="true" />
+
     <application
         android:icon="@drawable/appicon"
         android:label="@string/app_name" >
         <activity
             android:name=".Main"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,30 +43,43 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AccActivity" >
-        </activity>
-        <activity android:name=".LightActivity" >
-        </activity>
-        <activity android:name=".SoundActivity" >
-        </activity>
-        <activity android:name=".FourierActivity" >
-        </activity>
-        <activity android:name=".MagnetActivity" >
-        </activity>
-        <activity android:name=".FlashActivity" >
-        </activity>
-        <activity android:name=".CompassActivity" >
-        </activity>
-        <activity android:name=".ClockActivity" >
-        </activity>
-        <activity android:name=".OsciActivity" >
-        </activity>
-        <activity android:name=".ConvertActivity" >
-        </activity>
-        <activity android:name=".AngleActivity" >
-        </activity>
-        <activity android:name=".LogActivity" >
-        </activity>
+        <activity
+            android:name=".AccActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LightActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SoundActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FourierActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MagnetActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".flash.FlashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".compass.CompassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".clock.ClockActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OsciActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ConvertActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AngleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".log.LogActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

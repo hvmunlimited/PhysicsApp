@@ -9,6 +9,10 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#fff"
-        android:text="" />
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="changeColor"
+        android:textColor="#333"
+        android:text="@string/clicktochange" />
 
 </LinearLayout>

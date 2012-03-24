@@ -3,35 +3,37 @@
     android:id="@+id/table"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#fff"
+    android:background="#eee"
     android:orientation="vertical" >
 
     <TableRow
         android:id="@+id/tableRow0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center_horizontal" >
 
-        <TextView android:tag="acc"
+        <TextView
             android:id="@+id/acceleration"
             style="@style/Icons"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/acc"
+            android:tag="acc"
             android:text="@string/acceleration" />
 
-        <TextView android:tag="light"
+        <TextView
             android:id="@+id/light"
             style="@style/Icons"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/light"
+            android:tag="light"
             android:text="@string/light" />
 
-        <TextView android:tag="sound"
+        <TextView
             android:id="@+id/sound"
             style="@style/Icons"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/mic"
+            android:tag="sound"
             android:text="@string/sound" />
     </TableRow>
 
@@ -39,34 +41,36 @@
         android:id="@+id/tableRow1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-20dp"
         android:gravity="center_horizontal" >
 
-        <TextView android:tag="fourier"
+        <TextView
             android:id="@+id/fourier"
             style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="1dp"
-            android:drawableTop="@drawable/osci"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/fourier"
+            android:tag="fourier"
             android:text="@string/fourier" />
 
-        <TextView android:tag="magnet"
+        <TextView
             android:id="@+id/magnet"
             style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/magnet"
+            android:tag="magnet"
             android:text="@string/magnet" />
 
-        <TextView android:tag="flash"
+        <TextView
             android:id="@+id/flash"
             style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/flash"
+            android:tag="flash"
             android:text="@string/flash" />
     </TableRow>
 
@@ -74,73 +78,74 @@
         android:id="@+id/tableRow2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-20dp"
         android:gravity="center_horizontal" >
-
-        <TextView android:tag="compass"
+
+        <TextView
             android:id="@+id/compass"
             style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/compass"
+            android:tag="compass"
             android:text="@string/compass" />
-
-        <TextView android:tag="clock"
+
+        <TextView
             android:id="@+id/clock"
             style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/clock"
+            android:tag="clock"
             android:text="@string/stopwatch" />
 
-        <TextView android:tag="osci"
+        <TextView
             android:id="@+id/osci"
             style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/osci"
+            android:tag="osci"
             android:text="@string/osci" />
-
     </TableRow>
 
     <TableRow
         android:id="@+id/tableRow3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-20dp"
         android:gravity="center_horizontal" >
 
-        <TextView android:tag="convert"
+        <TextView
             android:id="@+id/convert"
             style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/convert"
+            android:tag="convert"
             android:text="@string/converter" />
 
-        <TextView android:tag="angle"
+        <TextView
             android:id="@+id/angle"
             style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/angle"
+            android:tag="angle"
             android:text="@string/angle" />
-
+
         <TextView
             android:id="@+id/log"
             style="@style/Icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="1dp"
+            android:drawablePadding="5dp"
             android:drawableTop="@drawable/log"
             android:tag="log"
             android:text="@string/log" />
-
     </TableRow>
 
 </TableLayout>

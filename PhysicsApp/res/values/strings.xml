@@ -18,7 +18,7 @@
     <string name="angle">Vinkelmåler</string>
     <string name="stopwatch">Stopur</string>
     <string name="converter">Omregner</string>
-    <string name="flash">Lommelygte</string>
+    <string name="flash">Farve Generator</string>
 
     <!-- Log -->
     <string name="log">Arkiv</string>
@@ -26,5 +26,16 @@
     <string name="no_image">No Image</string>
     <string name="arrow">Arrow</string>
     <string name="date_format">TT:MM:SS, DD-MM-YYYY</string>
+    
+    <!-- Clock -->
+    <string name="stop">Stop</string>
+    <string name="start">Start</string>
+    <string name="reset">Reset</string>
+    <string name="resume">Resume</string>
+    <string name="pause">Pause</string>
+    
+    <!-- Flash -->
+    <string name="pickacolor">Vælg en farve</string>
+    <string name="clicktochange">Klik for at skifte farve</string>
 
 </resources>

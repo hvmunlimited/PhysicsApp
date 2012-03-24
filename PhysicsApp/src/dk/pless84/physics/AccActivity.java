@@ -10,5 +10,4 @@ public class AccActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.acc);
 	}
-
 }
