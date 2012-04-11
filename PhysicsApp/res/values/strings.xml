@@ -22,10 +22,10 @@
 
     <!-- Log -->
     <string name="log">Arkiv</string>
-    <string name="no_item">No Item</string>
-    <string name="no_image">No Image</string>
-    <string name="arrow">Arrow</string>
+    <string name="no_log_items">Der er ingen logs endnu</string>
     <string name="date_format">TT:MM:SS, DD-MM-YYYY</string>
+    <string name="log_edit_confirm">Bekræft</string>
+    <string name="menu_delete">Slet</string>
     
     <!-- Clock -->
     <string name="stop">Stop</string>
