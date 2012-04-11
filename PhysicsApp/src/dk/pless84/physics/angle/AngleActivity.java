@@ -1,4 +1,4 @@
-package dk.pless84.physics;
+package dk.pless84.physics.angle;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+import dk.pless84.physics.R;
 
 public class AngleActivity extends Activity implements SensorEventListener {
 

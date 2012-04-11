@@ -1,9 +1,17 @@
 package dk.pless84.physics;
 
+import dk.pless84.physics.acc.AccActivity;
+import dk.pless84.physics.angle.AngleActivity;
 import dk.pless84.physics.clock.ClockActivity;
 import dk.pless84.physics.compass.CompassActivity;
+import dk.pless84.physics.convert.ConvertActivity;
 import dk.pless84.physics.flash.FlashActivity;
+import dk.pless84.physics.fourier.FourierActivity;
+import dk.pless84.physics.light.LightActivity;
 import dk.pless84.physics.log.LogActivity;
+import dk.pless84.physics.magnet.MagnetActivity;
+import dk.pless84.physics.osci.OsciActivity;
+import dk.pless84.physics.sound.SoundActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
