@@ -1,14 +1,15 @@
-package dk.pless84.physics;
+package dk.pless84.physics.sound;
 
 import android.app.Activity;
 import android.os.Bundle;
+import dk.pless84.physics.R;
 
-public class LightActivity extends Activity {
+public class SoundActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.light);
+		setContentView(R.layout.sound);
 	}
 
 }

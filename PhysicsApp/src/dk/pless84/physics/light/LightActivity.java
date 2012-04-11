@@ -1,14 +1,15 @@
-package dk.pless84.physics;
+	package dk.pless84.physics.light;
 
 import android.app.Activity;
 import android.os.Bundle;
+import dk.pless84.physics.R;
 
-public class MagnetActivity extends Activity {
+public class LightActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.magnet);
+		setContentView(R.layout.light);
 	}
 
 }

@@ -44,19 +44,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AccActivity"
+            android:name=".acc.AccActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LightActivity"
+            android:name=".light.LightActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SoundActivity"
+            android:name=".sound.SoundActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FourierActivity"
+            android:name=".fourier.FourierActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MagnetActivity"
+            android:name=".magnet.MagnetActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".flash.FlashActivity"
@@ -69,13 +69,13 @@
             android:name=".clock.ClockActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OsciActivity"
+            android:name=".osci.OsciActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ConvertActivity"
+            android:name=".convert.ConvertActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AngleActivity"
+            android:name=".angle.AngleActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".log.LogActivity"

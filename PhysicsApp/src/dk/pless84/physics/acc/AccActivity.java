@@ -1,7 +1,8 @@
-package dk.pless84.physics;
+package dk.pless84.physics.acc;
 
 import android.app.Activity;
 import android.os.Bundle;
+import dk.pless84.physics.R;
 
 public class AccActivity extends Activity {
 
