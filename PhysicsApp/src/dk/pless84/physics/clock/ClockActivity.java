@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import dk.pless84.physics.R;
+import dk.pless84.physics.clock.StopwatchTextView.TimerState;
 
 public class ClockActivity extends Activity {
 	private TextView mChron;
@@ -20,7 +21,13 @@ public class ClockActivity extends Activity {
 	}
 
 	public void startChronometer(View view) {
-		stopWatch.start();
+		if (stopWatch.getState().equals(TimerState.STOPPED)) {
+			stopWatch.start();
+		} else if (stopWatch.getState().equals(TimerState.RUNNING)) {
+			stopWatch.pause();
+		} else {
+			stopWatch.resume();
+		}
 	}
 
 	public void pauseChronometer(View view) {
@@ -34,7 +41,7 @@ public class ClockActivity extends Activity {
 	public void resetChronometer(View view) {
 		stopWatch.reset();
 	}
-	
+
 	public void resumeChronometer(View view) {
 		stopWatch.resume();
 	}
