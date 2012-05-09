@@ -8,7 +8,7 @@ public class StopwatchTextView implements Runnable {
 		STOPPED, PAUSED, RUNNING
 	};
 
-	private TextView widget;
+	private TextView widgetStopwatch;
 	private long updateInterval;
 	private long time;
 	private long startTime;
@@ -16,7 +16,7 @@ public class StopwatchTextView implements Runnable {
 	private Handler handler;
 
 	public StopwatchTextView(TextView widget, long updateInterval) {
-		this.widget = widget;
+		this.widgetStopwatch = widget;
 		this.updateInterval = updateInterval;
 		time = 0;
 		startTime = 0;
@@ -30,7 +30,7 @@ public class StopwatchTextView implements Runnable {
 		long millis = time - startTime;
 		long seconds = (long) (millis / 1000);
 
-		widget.setText(String.format("%02d:%02d.%03d", seconds / 60,
+		widgetStopwatch.setText(String.format("%02d:%02d.%03d", seconds / 60,
 				seconds % 60, millis % 1000));
 
 		if (state == TimerState.RUNNING) {
@@ -46,13 +46,6 @@ public class StopwatchTextView implements Runnable {
 		state = TimerState.RUNNING;
 
 		handler.post(this);
-	}
-
-	/**
-	 * Resets the timer.
-	 */
-	public void reset() {
-		start();
 	}
 
 	/**
@@ -85,7 +78,7 @@ public class StopwatchTextView implements Runnable {
 		startTime = 0;
 		state = TimerState.STOPPED;
 
-		widget.setText("00:00.000");
+		widgetStopwatch.setText("00:00.000");
 	}
 
 	/**
