@@ -1,25 +1,25 @@
 package dk.pless84.physics.clock;
 
+import dk.pless84.physics.clock.StopwatchTextView.TimerState;
 import android.os.Handler;
 import android.widget.TextView;
 
-public class StopwatchTextView implements Runnable {
+public class CountdownTextview implements Runnable {
 	public enum TimerState {
 		STOPPED, PAUSED, RUNNING
 	};
 
-	private TextView widgetStopwatch;
+	private TextView widgetCountdown;
 	private long updateInterval;
 	private long time;
 	private long startTime;
 	private TimerState state;
 	private Handler handler;
 
-	public StopwatchTextView(TextView widget, long updateInterval) {
-		this.widgetStopwatch = widget;
+	public CountdownTextview(TextView widget, long updateInterval) {
+		this.widgetCountdown = widget;
 		this.updateInterval = updateInterval;
 		time = 0;
-		startTime = 0;
 		state = TimerState.STOPPED;
 
 		handler = new Handler();
@@ -27,10 +27,17 @@ public class StopwatchTextView implements Runnable {
 
 	public void run() {
 		time = System.currentTimeMillis();
-		long millis = time - startTime;
+		long millis;
+
+		if ((startTime - time) > 0) {
+			millis = startTime - time;
+		} else {
+			millis = 0;
+		}
+
 		long seconds = (long) (millis / 1000);
 
-		widgetStopwatch.setText(String.format("%02d:%02d.%03d", seconds / 60,
+		widgetCountdown.setText(String.format("%02d:%02d.%03d", seconds / 60,
 				seconds % 60, millis % 1000));
 
 		if (state == TimerState.RUNNING) {
@@ -63,22 +70,27 @@ public class StopwatchTextView implements Runnable {
 	public void resume() {
 		state = TimerState.RUNNING;
 
-		startTime = System.currentTimeMillis() - (time - startTime);
-
 		handler.post(this);
 	}
 
-	/**
-	 * Stops the timer and resets all time values.
-	 */
-	public void stop() {
-		handler.removeCallbacks(this);
-
-		time = 0;
-		startTime = 0;
+	public void reset() {
+		pause();
 		state = TimerState.STOPPED;
+		time = 0;
+	}
 
-		widgetStopwatch.setText("00:00.000");
+	public void plustime(long time) {
+		startTime = startTime + time;
+
+	}
+
+	public void minustime(long time) {
+		if (startTime - time > 0) {
+			startTime = startTime - time;
+		} else {
+			startTime = 0;
+		}
+
 	}
 
 	/**
