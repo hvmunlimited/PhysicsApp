@@ -37,5 +37,11 @@
     <!-- Flash -->
     <string name="pickacolor">Vælg en farve</string>
     <string name="clicktochange">Klik for at skifte farve</string>
+    
+    <!-- Sound -->
+    <string name="sndImgDsc">Frekvens spektrum</string>
+    
+    <!-- Fourier -->
+    <string name="fourierDsc">Frekvens spektrum</string>
 
 </resources>

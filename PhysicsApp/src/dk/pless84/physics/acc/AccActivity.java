@@ -13,7 +13,7 @@ public class AccActivity extends Activity implements SensorEventListener {
 	private TextView mAccX;
 	private TextView mAccY;
 	private TextView mAccZ;
-	
+
 	private SensorManager sensorManager;
 
 	@Override
@@ -24,7 +24,7 @@ public class AccActivity extends Activity implements SensorEventListener {
 		mAccX = (TextView) findViewById(R.id.accX);
 		mAccY = (TextView) findViewById(R.id.accY);
 		mAccZ = (TextView) findViewById(R.id.accZ);
-		
+
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -33,21 +33,13 @@ public class AccActivity extends Activity implements SensorEventListener {
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
-
 	}
 
-	public void onSensorChanged(SensorEvent event)
-    {
-        if(event.sensor.getType()==Sensor.TYPE_ACCELEROMETER)
-        {
-            updateView(event.values[0], event.values[1], event.values[2]);
-        }
-    }
-   
-    public void updateView( Float x, Float y, Float z )
-    {
-        mAccX.setText("x axis = "+x.toString() );
-        mAccY.setText("y axis ="+y.toString() );
-        mAccZ.setText("z axis ="+z.toString() );
-    }
+	public void onSensorChanged(SensorEvent event) {
+		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+			mAccX.setText(event.values[0] + "");
+			mAccY.setText(event.values[1] + "");
+			mAccZ.setText(event.values[2] + "");
+		}
+	}
 }
