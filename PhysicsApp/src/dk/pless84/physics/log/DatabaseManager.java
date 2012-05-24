@@ -63,12 +63,12 @@ public class DatabaseManager {
 		long rowId = -1;
 		// get the current date
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-		String format = s.format(new Date());
+		String date = s.format(new Date());
         
 		// this is a key value pair holder used by android's SQLite functions
 		ContentValues values = new ContentValues();
 		values.put(TABLE_ROW_TYPE, type);
-		values.put(TABLE_ROW_DATE, format);
+		values.put(TABLE_ROW_DATE, date);
 
 		// ask the database object to insert the new data
 		try {
@@ -83,8 +83,12 @@ public class DatabaseManager {
 	public void addLogRow(long expId, float x, float y, float z) {
 		// this is a key value pair holder used by android's SQLite functions
 		ContentValues values = new ContentValues();
+		
+		SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss");
+		String time = s.format(new Date());
+		
 		values.put(TABLE_ROW_EXPID, expId);
-		values.put(TABLE_ROW_TIME, System.currentTimeMillis());
+		values.put(TABLE_ROW_TIME, time);
 		values.put(TABLE_ROW_XVAL, x);
 		values.put(TABLE_ROW_YVAL, y);
 		values.put(TABLE_ROW_ZVAL, z);

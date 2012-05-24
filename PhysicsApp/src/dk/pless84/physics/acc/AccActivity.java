@@ -9,7 +9,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import dk.pless84.physics.R;
 import dk.pless84.physics.log.DatabaseManager;
@@ -19,23 +20,29 @@ public class AccActivity extends Activity implements SensorEventListener {
 	private TextView mAccY;
 	private TextView mAccZ;
 
+	private Timer mTimer;
+	private TimerTask mTimerTask;
+
 	private SensorManager sensorManager;
 	private DatabaseManager dbMgr;
-	
+
 	private float xVal;
 	private float yVal;
 	private float zVal;
 	private long rowId;
+	private boolean isStop;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.acc);
 
+		isStop = true;
+
 		mAccX = (TextView) findViewById(R.id.accX);
 		mAccY = (TextView) findViewById(R.id.accY);
 		mAccZ = (TextView) findViewById(R.id.accZ);
-		
+
 		xVal = 0;
 		yVal = 0;
 		zVal = 0;
@@ -44,24 +51,24 @@ public class AccActivity extends Activity implements SensorEventListener {
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
 				SensorManager.SENSOR_DELAY_NORMAL);
-		
+
 		dbMgr = new DatabaseManager(this);
 		rowId = dbMgr.addExperiment("Acc");
-		
-		final Handler handler = new Handler(); 
-        Timer t = new Timer(); 
-        t.schedule(new TimerTask() { 
-                public void run() { 
-                        handler.post(new Runnable() { 
-                                public void run() { 
-                                        killListener(); 
-                                        showDialog(DIALOG_DELAY); 
-                                } 
-                        }); 
-                } 
-        }, 30000);
+
 	}
 
+	public void startLog(View v) {
+		Button btn = (Button) v;
+		isStop = !isStop;
+		if (isStop) {
+			stopTimer();
+			btn.setText(R.string.start);
+		} else {
+			startTimer();
+			btn.setText(R.string.stop);
+		}
+	}
+	
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
 	}
@@ -76,10 +83,31 @@ public class AccActivity extends Activity implements SensorEventListener {
 			mAccZ.setText(zVal + "");
 		}
 	}
-	
-	private Runnable logTask = new Runnable() {
-		public void run() {
-			dbMgr.addLogRow(rowId, xVal, yVal, zVal);
+
+	private void startTimer() {
+		if (mTimer == null) {
+			mTimer = new Timer();
 		}
-	};
+		if (mTimerTask == null) {
+			mTimerTask = new TimerTask() {
+				@Override
+				public void run() {
+					dbMgr.addLogRow(rowId, xVal, yVal, zVal);
+				}
+			};
+		}
+		if (mTimer != null && mTimerTask != null)
+			mTimer.schedule(mTimerTask, 0, 50);
+	}
+
+	private void stopTimer() {
+		if (mTimer != null) {
+			mTimer.cancel();
+			mTimer = null;
+		}
+		if (mTimerTask != null) {
+			mTimerTask.cancel();
+			mTimerTask = null;
+		}
+	}
 }

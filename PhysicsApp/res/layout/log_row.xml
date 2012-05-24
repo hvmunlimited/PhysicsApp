@@ -5,9 +5,8 @@
 
     <TextView
         android:id="@+id/log_label"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@+id/TextView01"
         android:textSize="20dp" />
 
 </LinearLayout>
