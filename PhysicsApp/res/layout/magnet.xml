@@ -3,12 +3,20 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/magX"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/magnet"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/magY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/magZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

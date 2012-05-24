@@ -32,7 +32,7 @@ public class ClockActivity extends Activity {
 		stopWatch = new StopwatchTextView(mChron, 100);
 		mSWStartpauseresume = (Button) findViewById(R.id.startclockbt);
 		mSWStop = (Button) findViewById(R.id.stopclockbt);
-		
+
 		mCountdown = (TextView) findViewById(R.id.countdowntime);
 		countdown = new CountdownTextview(mCountdown, 100);
 		mCDStart = (Button) findViewById(R.id.startcountdownbt);
@@ -41,8 +41,7 @@ public class ClockActivity extends Activity {
 		mCDPlussecond = (Button) findViewById(R.id.plussecondcountdownbt);
 		mCDMinusminute = (Button) findViewById(R.id.minusminutecountdownbt);
 		mCDMinussecond = (Button) findViewById(R.id.minussecondcountdownbt);
-		
-		
+
 	}
 
 	public void startChronometer(View view) {
@@ -70,40 +69,40 @@ public class ClockActivity extends Activity {
 	public void resumeChronometer(View view) {
 		stopWatch.resume();
 	}
-	
-	public void startCountdown(View view){
-		if(countdown.getState().equals(TimerState.STOPPED)){
+
+	public void startCountdown(View view) {
+		if (countdown.getState().equals(TimerState.STOPPED)) {
 			countdown.start();
 			mCDStart.setText("Start");
-		}else if(countdown.getState().equals(TimerState.RUNNING)){
+		} else if (countdown.getState().equals(TimerState.RUNNING)) {
 			countdown.pause();
 			mCDStart.setText("Resume");
-			
-		}else{
+
+		} else {
 			countdown.resume();
 			mCountdown.setText("Pause");
 		}
-		
+
 	}
-	
-	public void reset(View view){
+
+	public void reset(View view) {
 		countdown.reset();
 	}
-	
-	public void plusMinute(View view){
+
+	public void plusMinute(View view) {
 		countdown.plustime(60000);
 	}
-	
-public void minusMinute(View view){
-	countdown.minustime(60000);
+
+	public void minusMinute(View view) {
+		countdown.minustime(60000);
 	}
 
-public void plusSecond(View view){
-	countdown.plustime(1000);
-}
+	public void plusSecond(View view) {
+		countdown.plustime(1000);
+	}
 
-public void minusSecond(View view){
-	countdown.minustime(1000);
-}
+	public void minusSecond(View view) {
+		countdown.minustime(1000);
+	}
 
 }

@@ -47,14 +47,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="plussecond"
-        android:text="@string/+" />
+        android:text="@string/plus" />
     
     <Button
         android:id="@+id/plusminutecountdownbt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="plusminute"
-        android:text="@string/+" />
+        android:text="@string/plus" />
     
     <TextView
         android:id="@+id/timecountdownbt"
@@ -66,14 +66,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="minussecond"
-        android:text="@string/-" />
+        android:text="@string/minus" />
         
         <Button
         android:id="@+id/minusminutecountdownbt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="minusminute"
-        android:text="@string/-" />
+        android:text="@string/minus" />
      
 
 </LinearLayout>
