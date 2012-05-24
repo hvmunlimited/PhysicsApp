@@ -33,6 +33,8 @@
     <string name="reset">Reset</string>
     <string name="resume">Resume</string>
     <string name="pause">Pause</string>
+    <string name="plus">Plus</string>
+    <string name="minus">Minus</string>
     
     <!-- Flash -->
     <string name="pickacolor">Vælg en farve</string>
