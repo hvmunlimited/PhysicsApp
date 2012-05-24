@@ -5,7 +5,8 @@
     android:layout_height="fill_parent"
     android:background="#eee"
     android:orientation="vertical" >
-    <TableRow
+
+    <TableRow
         android:id="@+id/tableRow0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

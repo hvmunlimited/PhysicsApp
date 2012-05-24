@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/countdowntime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/startcountdownbt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startChronometer"
+        android:text="@string/start" />
+   
+    <Button
+        android:id="@+id/stopcountdownbt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="stopChronometer"
+        android:text="@string/stop" />
+    
+    <Button
+        android:id="@+id/resetcountdownbt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="resetChronometer"
+        android:text="@string/reset" />
+    
+
+</LinearLayout>
