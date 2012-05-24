@@ -6,8 +6,7 @@
     android:orientation="vertical" 
     android:background="#eee"
     >
-
-
+
     <TextView
         android:id="@+id/lightX"
         android:layout_width="fill_parent"

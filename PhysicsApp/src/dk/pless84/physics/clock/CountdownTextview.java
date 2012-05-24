@@ -1,5 +1,6 @@
 package dk.pless84.physics.clock;
 
+import dk.pless84.physics.clock.StopwatchTextView.TimerState;
 import android.os.Handler;
 import android.widget.TextView;
 
