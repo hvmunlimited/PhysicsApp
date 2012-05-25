@@ -4,9 +4,9 @@ public class ExpLog {
 	private long id;
 	private long expId;
 	private String time;
-	private long xVal;
-	private long yVal;
-	private long zVal;
+	private float xVal;
+	private float yVal;
+	private float zVal;
 	
 	public long getId() {
 		return id;
@@ -26,22 +26,22 @@ public class ExpLog {
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public long getxVal() {
+	public float getxVal() {
 		return xVal;
 	}
-	public void setxVal(long xVal) {
+	public void setxVal(float xVal) {
 		this.xVal = xVal;
 	}
-	public long getyVal() {
+	public float getyVal() {
 		return yVal;
 	}
-	public void setyVal(long yVal) {
+	public void setyVal(float yVal) {
 		this.yVal = yVal;
 	}
-	public long getzVal() {
+	public float getzVal() {
 		return zVal;
 	}
-	public void setzVal(long zVal) {
+	public void setzVal(float zVal) {
 		this.zVal = zVal;
 	}
 }

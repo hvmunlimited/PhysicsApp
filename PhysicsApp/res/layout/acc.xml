@@ -23,6 +23,7 @@
         android:id="@+id/accStart"
         android:text="@string/start_logging"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="startLog" />
 
 </LinearLayout>

@@ -31,6 +31,7 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 	private float zVal;
 	private long rowId;
 	private boolean isStop;
+	private long rate;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,8 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 		xVal = 0;
 		yVal = 0;
 		zVal = 0;
+		
+		rate = 50;
 
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		sensorManager.registerListener(this,
@@ -53,8 +56,6 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 				SensorManager.SENSOR_DELAY_NORMAL);
 
 		dbMgr = new DatabaseManager(this);
-		rowId = dbMgr.addExperiment("Mag");
-
 	}
 
 	public void startLog(View v) {
@@ -62,11 +63,12 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 		if (isStop) {
 			stopTimer();
 			btn.setText(R.string.start_logging);
-			isStop = true;
+			isStop = false;
 		} else {
+			rowId = dbMgr.addExperiment("Mag", rate);
 			startTimer();
 			btn.setText(R.string.stop_logging);
-			isStop = false;
+			isStop = true;
 		}
 	}
 	
@@ -98,7 +100,7 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 			};
 		}
 		if (mTimer != null && mTimerTask != null)
-			mTimer.schedule(mTimerTask, 0, 50);
+			mTimer.schedule(mTimerTask, 0, rate);
 	}
 
 	private void stopTimer() {

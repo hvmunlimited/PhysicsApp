@@ -1,5 +1,12 @@
 package dk.pless84.physics;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import dk.pless84.physics.acc.AccActivity;
 import dk.pless84.physics.angle.AngleActivity;
 import dk.pless84.physics.clock.ClockActivity;
@@ -12,13 +19,6 @@ import dk.pless84.physics.log.LogActivity;
 import dk.pless84.physics.magnet.MagnetActivity;
 import dk.pless84.physics.osci.OsciActivity;
 import dk.pless84.physics.sound.SoundActivity;
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 
 public class Main extends Activity implements OnClickListener {
 

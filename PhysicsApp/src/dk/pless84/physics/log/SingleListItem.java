@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ public class SingleListItem extends ListActivity {
 		dbmgr = new DatabaseManager(this);
 
 		final List<ExpLog> logs = dbmgr.getAllLogs(expId);
-		Log.e("LogExp", logs.toString());
 
 		// ArrayAdapter<ExpLog> adapter = new ArrayAdapter<ExpLog>(this,
 		// R.layout.log_row, R.id.log_type, logs);

@@ -6,17 +6,18 @@
 
     <TextView
         android:id="@+id/log_id"
-        style="@style/listRow"
-        android:text="10" />
+        style="@style/listRow" />
 
     <TextView
         android:id="@+id/log_type"
-        style="@style/listRow"
-        android:text="Acc" />
+        style="@style/listRow" />
 
     <TextView
         android:id="@+id/log_date"
-        style="@style/listRow"
-        android:text="03-10-2012" />
+        style="@style/listRow" />
+    
+    <TextView
+        android:id="@+id/log_rate"
+        style="@style/listRow" />
 
 </LinearLayout>
