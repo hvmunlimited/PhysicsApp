@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/acceleration"
-            style="@style/Icons"
+            style="@style/icons"
             android:drawablePadding="5dp"
             android:drawableTop="@drawable/acc"
             android:tag="acc"
@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/light"
-            style="@style/Icons"
+            style="@style/icons"
             android:drawablePadding="5dp"
             android:drawableTop="@drawable/light"
             android:tag="light"
@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/sound"
-            style="@style/Icons"
+            style="@style/icons"
             android:drawablePadding="5dp"
             android:drawableTop="@drawable/mic"
             android:tag="sound"
@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/fourier"
-            style="@style/Icons"
+            style="@style/icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
@@ -54,7 +54,7 @@
 
         <TextView
             android:id="@+id/magnet"
-            style="@style/Icons"
+            style="@style/icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
@@ -64,7 +64,7 @@
 
         <TextView
             android:id="@+id/flash"
-            style="@style/Icons"
+            style="@style/icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
@@ -81,7 +81,7 @@
 
         <TextView
             android:id="@+id/compass"
-            style="@style/Icons"
+            style="@style/icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
@@ -91,7 +91,7 @@
 
         <TextView
             android:id="@+id/clock"
-            style="@style/Icons"
+            style="@style/icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
@@ -101,7 +101,7 @@
 
         <TextView
             android:id="@+id/osci"
-            style="@style/Icons"
+            style="@style/icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
@@ -118,7 +118,7 @@
 
         <TextView
             android:id="@+id/convert"
-            style="@style/Icons"
+            style="@style/icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
@@ -128,7 +128,7 @@
 
         <TextView
             android:id="@+id/angle"
-            style="@style/Icons"
+            style="@style/icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
@@ -138,7 +138,7 @@
 
         <TextView
             android:id="@+id/log"
-            style="@style/Icons"
+            style="@style/icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"

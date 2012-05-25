@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#eee" >
+
+    <TextView
+        android:id="@+id/log_id"
+        style="@style/listRow"
+        android:text="10" />
+
+    <TextView
+        android:id="@+id/log_type"
+        style="@style/listRow"
+        android:text="Acc" />
+
+    <TextView
+        android:id="@+id/log_date"
+        style="@style/listRow"
+        android:text="03-10-2012" />
+
+</LinearLayout>

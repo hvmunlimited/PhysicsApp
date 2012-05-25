@@ -82,7 +82,7 @@
             android:name=".log.LogActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".log.ExperimentDetails"
+            android:name=".log.SingleListItem"
             android:screenOrientation="portrait" />
     </application>
 

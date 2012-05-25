@@ -3,6 +3,7 @@ package dk.pless84.physics.log;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -80,6 +81,19 @@ public class DatabaseManager {
 		return rowId;
 	}
 
+	/**********************************************************************
+	 * ADDING A ROW TO THE DATABASE TABLE
+	 * 
+	 * This is an example of how to add a row to a database table using this
+	 * class. You should edit this method to suit your needs.
+	 * 
+	 * the key is automatically assigned by the database
+	 * 
+	 * @param type
+	 *            the value for the row's first column
+	 * @param date
+	 *            the value for the row's second column
+	 */
 	public void addLogRow(long expId, float x, float y, float z) {
 		// this is a key value pair holder used by android's SQLite functions
 		ContentValues values = new ContentValues();
@@ -210,38 +224,28 @@ public class DatabaseManager {
 	 * the key is automatically assigned by the database
 	 */
 
-	public ArrayList<ArrayList<Object>> getAllRowsAsArrays() {
-		// create an ArrayList that will hold all of the data collected from
-		// the database.
-		ArrayList<ArrayList<Object>> dataArrays = new ArrayList<ArrayList<Object>>();
+	public ArrayList<ArrayList<String>> getAllRowsAsArrayList() {
+		ArrayList<ArrayList<String>> dataArrays = new ArrayList<ArrayList<String>>();
 
-		// this is a database call that creates a "cursor" object.
-		// the cursor object store the information collected from the
-		// database and is used to iterate through the data.
 		Cursor cursor;
 
 		try {
-			// ask the database object to create the cursor.
 			cursor = db.query(TABLE_NAME_EXPERIMENTS, new String[] {
 					TABLE_ROW_ID, TABLE_ROW_TYPE, TABLE_ROW_DATE }, null, null,
 					null, null, null);
 
-			// move the cursor's pointer to position zero.
 			cursor.moveToFirst();
 
-			// if there is data after the current cursor position, add it
-			// to the ArrayList.
 			if (!cursor.isAfterLast()) {
 				do {
-					ArrayList<Object> dataList = new ArrayList<Object>();
+					ArrayList<String> dataList = new ArrayList<String>();
 
-					dataList.add(cursor.getLong(0));
+					dataList.add(cursor.getLong(0)+"");
 					dataList.add(cursor.getString(1));
 					dataList.add(cursor.getString(2));
 
 					dataArrays.add(dataList);
 				}
-				// move the cursor's pointer up one position.
 				while (cursor.moveToNext());
 			}
 		} catch (SQLException e) {
@@ -249,9 +253,62 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 
-		// return the ArrayList that holds the data collected from
-		// the database.
 		return dataArrays;
+	}
+	
+	public List<Experiment> getAllExperiments() {
+		List<Experiment> experiments = new ArrayList<Experiment>();
+
+		Cursor cursor = db.query(TABLE_NAME_EXPERIMENTS, new String[] {
+				TABLE_ROW_ID, TABLE_ROW_TYPE, TABLE_ROW_DATE }, null, null,
+				null, null, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			Experiment experiment = cursorToExperiment(cursor);
+			experiments.add(experiment);
+			cursor.moveToNext();
+		}
+		// Make sure to close the cursor
+		cursor.close();
+		return experiments;
+	}
+
+	private Experiment cursorToExperiment(Cursor cursor) {
+		Experiment experiment = new Experiment();
+		experiment.setId(cursor.getLong(0));
+		experiment.setType(cursor.getString(1));
+		experiment.setDate(cursor.getString(2));
+		return experiment;
+	}
+	
+	public List<ExpLog> getAllLogs(long expId) {
+		List<ExpLog> logs = new ArrayList<ExpLog>();
+
+		Cursor cursor = db.query(TABLE_NAME_LOGS, new String[] {
+				TABLE_ROW_ID, TABLE_ROW_EXPID, TABLE_ROW_TIME, TABLE_ROW_XVAL, TABLE_ROW_YVAL, TABLE_ROW_ZVAL }, TABLE_ROW_EXPID + "=" + expId, null,
+				null, null, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			ExpLog log = cursorToLog(cursor);
+			logs.add(log);
+			cursor.moveToNext();
+		}
+		// Make sure to close the cursor
+		cursor.close();
+		return logs;
+	}
+	
+	private ExpLog cursorToLog(Cursor cursor) {
+		ExpLog log = new ExpLog();
+		log.setId(cursor.getLong(0));
+		log.setExpId(cursor.getLong(1));
+		log.setTime(cursor.getString(2));
+		log.setxVal(cursor.getLong(3));
+		log.setyVal(cursor.getLong(4));
+		log.setzVal(cursor.getLong(5));
+		return log;
 	}
 
 	/**********************************************************************

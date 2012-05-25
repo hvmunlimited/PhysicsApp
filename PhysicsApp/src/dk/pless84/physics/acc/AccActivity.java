@@ -37,7 +37,7 @@ public class AccActivity extends Activity implements SensorEventListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.acc);
 
-		isStop = true;
+		isStop = false;
 
 		mAccX = (TextView) findViewById(R.id.accX);
 		mAccY = (TextView) findViewById(R.id.accY);
@@ -59,13 +59,14 @@ public class AccActivity extends Activity implements SensorEventListener {
 
 	public void startLog(View v) {
 		Button btn = (Button) v;
-		isStop = !isStop;
 		if (isStop) {
 			stopTimer();
-			btn.setText(R.string.start);
+			btn.setText(R.string.start_logging);
+			isStop = true;
 		} else {
 			startTimer();
-			btn.setText(R.string.stop);
+			btn.setText(R.string.stop_logging);
+			isStop = false;
 		}
 	}
 	

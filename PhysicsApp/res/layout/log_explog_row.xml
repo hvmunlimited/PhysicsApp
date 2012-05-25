@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#eee" >
+
+    <TextView
+        android:id="@+id/log_time"
+        style="@style/listRow" />
+
+    <TextView
+        android:id="@+id/log_xVal"
+        style="@style/listRow" />
+
+    <TextView
+        android:id="@+id/log_yVal"
+        style="@style/listRow" />
+    
+    <TextView
+        android:id="@+id/log_zVal"
+        style="@style/listRow" />
+
+</LinearLayout>
