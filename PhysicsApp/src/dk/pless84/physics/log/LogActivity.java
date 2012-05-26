@@ -1,10 +1,10 @@
 package dk.pless84.physics.log;
 
-import java.io.File;
 import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -31,9 +31,6 @@ public class LogActivity extends ListActivity {
 		dbmgr = new DatabaseManager(this);
 
 		final List<Experiment> experiments = dbmgr.getAllExperiments();
-
-		// ArrayAdapter<Experiment> adapter = new ArrayAdapter<Experiment>(this,
-		// R.layout.log_row, R.id.log_type, experiments);
 
 		adapter = new BaseAdapter() {
 
@@ -83,11 +80,27 @@ public class LogActivity extends ListActivity {
 					int position, long id) {
 				AlertDialog.Builder adb = new AlertDialog.Builder(
 						LogActivity.this);
-				adb.setTitle("Slet?");
-				adb.setMessage(getString(R.string.log_delete));
+				adb.setTitle("Slet eller Gem?");
+				adb.setMessage(getString(R.string.log_dialog));
 				final int pos = position;
+				adb.setNeutralButton("Gem", new AlertDialog.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Experiment exp = experiments.get(pos);
+						Uri uri = dbmgr.genCSVFile(getApplicationContext(), exp);
+						
+						Intent i = new Intent();
+						i.setAction(Intent.ACTION_SEND);
+						i.putExtra(Intent.EXTRA_STREAM, uri);
+						i.setType("application/csv");
+						try {
+							startActivity(Intent.createChooser(i, "Title"));
+						} catch (ActivityNotFoundException e) {
+							e.printStackTrace();
+						}
+					}
+				});
 				adb.setNegativeButton(getString(R.string.cancel), null);
-				adb.setPositiveButton(getString(R.string.ok), new AlertDialog.OnClickListener() {
+				adb.setPositiveButton("Slet", new AlertDialog.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						long expId = experiments.get(pos).getId();
 						dbmgr.deleteExperiment(expId);
@@ -97,26 +110,9 @@ public class LogActivity extends ListActivity {
 					}
 				});
 				adb.show();
+				
 				return true;
 			}
 		});
-	}
-
-	@Override
-	protected void onDestroy() {
-		dbmgr.closeDb();
-		super.onDestroy();
-	}
-	
-	private void share() {
-
-	    Intent share = new Intent(Intent.ACTION_SEND);
-	    share.setType("image/png");
-
-	    Uri uri = Uri.fromFile(new File(""));
-	    share.putExtra(Intent.EXTRA_STREAM, uri);
-
-	    startActivity(Intent.createChooser(share, "Share Tag"));
-
 	}
 }

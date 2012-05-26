@@ -1,5 +1,8 @@
 package dk.pless84.physics.log;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,22 +14,16 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 
 public class DatabaseManager {
-	// the Activity or Application that is creating an object from this class.
-	Context context;
+	private CustomSQLiteOpenHelper helper;
 
-	// a reference to the database used by this application/object
-	private SQLiteDatabase db;
-
-	// These constants are specific to the database. They should be
-	// changed to suit your needs.
 	public static final String DB_NAME = "physicsapp.db";
 	public static final int DB_VERSION = 1;
 
-	// These constants are specific to the database table. They should be
-	// changed to suit your needs.
 	public static final String TABLE_NAME_EXPERIMENTS = "experiments";
 	public static final String TABLE_ROW_ID = "id_";
 	public static final String TABLE_ROW_TYPE = "type";
@@ -41,63 +38,33 @@ public class DatabaseManager {
 	public static final String TABLE_ROW_ZVAL = "zVal";
 
 	public DatabaseManager(Context context) {
-		this.context = context;
-
-		// create or open the database
-		CustomSQLiteOpenHelper helper = new CustomSQLiteOpenHelper(context);
-		db = helper.getWritableDatabase();
+		helper = new CustomSQLiteOpenHelper(context);
 	}
 
-	/**********************************************************************
-	 * ADDING A ROW TO THE DATABASE TABLE
-	 * 
-	 * This is an example of how to add a row to a database table using this
-	 * class. You should edit this method to suit your needs.
-	 * 
-	 * the key is automatically assigned by the database
-	 * 
-	 * @param type
-	 *            the value for the row's first column
-	 * @param date
-	 *            the value for the row's second column
-	 */
 	public long addExperiment(String type, long rate) {
+		SQLiteDatabase db = helper.getWritableDatabase();
 		long rowId = -1;
-		// get the current date
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 		String date = s.format(new Date());
 
-		// this is a key value pair holder used by android's SQLite functions
 		ContentValues values = new ContentValues();
 		values.put(TABLE_ROW_TYPE, type);
 		values.put(TABLE_ROW_DATE, date);
 		values.put(TABLE_ROW_RATE, rate);
 
-		// ask the database object to insert the new data
 		try {
 			rowId = db.insert(TABLE_NAME_EXPERIMENTS, null, values);
 		} catch (SQLException e) {
 			Log.e("DB ERROR", e.toString());
 			e.printStackTrace();
 		}
+		db.close();
 		return rowId;
 	}
 
-	/**********************************************************************
-	 * ADDING A ROW TO THE DATABASE TABLE
-	 * 
-	 * This is an example of how to add a row to a database table using this
-	 * class. You should edit this method to suit your needs.
-	 * 
-	 * the key is automatically assigned by the database
-	 * 
-	 * @param type
-	 *            the value for the row's first column
-	 * @param date
-	 *            the value for the row's second column
-	 */
 	public void addLogRow(long expId, float x, float y, float z) {
-		// this is a key value pair holder used by android's SQLite functions
+		SQLiteDatabase db = helper.getWritableDatabase();
+
 		ContentValues values = new ContentValues();
 
 		SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss.SSS");
@@ -109,36 +76,39 @@ public class DatabaseManager {
 		values.put(TABLE_ROW_YVAL, y);
 		values.put(TABLE_ROW_ZVAL, z);
 
-		// ask the database object to insert the new data
 		try {
 			db.insert(TABLE_NAME_LOGS, null, values);
 		} catch (SQLException e) {
 			Log.e("DB ERROR", e.toString());
 			e.printStackTrace();
 		}
+		db.close();
 	}
 
 	public void deleteExperiment(long rowID) {
-		// ask the database manager to delete the row of given id
+		SQLiteDatabase db = helper.getWritableDatabase();
 		try {
 			db.delete(TABLE_NAME_EXPERIMENTS, TABLE_ROW_ID + "=" + rowID, null);
 		} catch (SQLException e) {
 			Log.e("DB ERROR", e.toString());
 			e.printStackTrace();
 		}
+		db.close();
 	}
 
 	public void deleteExpLog(long expId) {
-		// ask the database manager to delete the row of given id
+		SQLiteDatabase db = helper.getWritableDatabase();
 		try {
 			db.delete(TABLE_NAME_LOGS, TABLE_ROW_EXPID + "=" + expId, null);
 		} catch (SQLException e) {
 			Log.e("DB ERROR", e.toString());
 			e.printStackTrace();
 		}
+		db.close();
 	}
 
 	public List<Experiment> getAllExperiments() {
+		SQLiteDatabase db = helper.getWritableDatabase();
 		List<Experiment> experiments = new ArrayList<Experiment>();
 
 		Cursor cursor = db.query(TABLE_NAME_EXPERIMENTS, new String[] {
@@ -151,8 +121,8 @@ public class DatabaseManager {
 			experiments.add(experiment);
 			cursor.moveToNext();
 		}
-		// Make sure to close the cursor
 		cursor.close();
+		db.close();
 		return experiments;
 	}
 
@@ -166,6 +136,7 @@ public class DatabaseManager {
 	}
 
 	public List<ExpLog> getAllLogs(long expId) {
+		SQLiteDatabase db = helper.getWritableDatabase();
 		List<ExpLog> logs = new ArrayList<ExpLog>();
 
 		Cursor cursor = db.query(TABLE_NAME_LOGS, new String[] { TABLE_ROW_ID,
@@ -179,8 +150,8 @@ public class DatabaseManager {
 			logs.add(log);
 			cursor.moveToNext();
 		}
-		// Make sure to close the cursor
 		cursor.close();
+		db.close();
 		return logs;
 	}
 
@@ -195,33 +166,27 @@ public class DatabaseManager {
 		return log;
 	}
 
-	public void closeDb() {
-		if (db.isOpen()) {
-			db.close();
+	public Uri genCSVFile(Context context, Experiment exp) {
+		List<ExpLog> list = getAllLogs(exp.getId());
+		File file = new File(Environment.getExternalStorageDirectory().toString() + "/" + exp.getType() + " " + exp.getDate() + ".csv");
+		try {
+			FileOutputStream writer = new FileOutputStream(file);
+			
+			writer.write(("time,x,y,z\n").getBytes());
+			for (int i = 0; i < list.size(); i++) {
+				ExpLog log = list.get(i);
+				String str = log.getTime() + "," + log.getxVal() + ","
+						+ log.getyVal() + "," + log.getzVal() + "\n";
+				writer.write(str.getBytes());
+			}
+			writer.flush();
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		return Uri.fromFile(file);
 	}
-
-	/**********************************************************************
-	 * THIS IS THE BEGINNING OF THE INTERNAL SQLiteOpenHelper SUBCLASS.
-	 * 
-	 * I MADE THIS CLASS INTERNAL SO I CAN COPY A SINGLE FILE TO NEW APPS AND
-	 * MODIFYING IT - ACHIEVING DATABASE FUNCTIONALITY. ALSO, THIS WAY I DO NOT
-	 * HAVE TO SHARE CONSTANTS BETWEEN TWO FILES AND CAN INSTEAD MAKE THEM
-	 * PRIVATE AND/OR NON-STATIC. HOWEVER, I THINK THE INDUSTRY STANDARD IS TO
-	 * KEEP THIS CLASS IN A SEPARATE FILE.
-	 *********************************************************************/
-
-	/**
-	 * This class is designed to check if there is a database that currently
-	 * exists for the given program. If the database does not exist, it creates
-	 * one. After the class ensures that the database exists, this class will
-	 * open the database for use. Most of this functionality will be handled by
-	 * the SQLiteOpenHelper parent class. The purpose of extending this class is
-	 * to tell the class how to create (or update) the database.
-	 * 
-	 * @author Randall Mitchell
-	 * 
-	 */
+	
 	private class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 		public CustomSQLiteOpenHelper(Context context) {
 			super(context, DB_NAME, null, DB_VERSION);

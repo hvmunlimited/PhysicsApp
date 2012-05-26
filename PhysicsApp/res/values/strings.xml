@@ -23,7 +23,7 @@
     <!-- Log -->
     <string name="log">Arkiv</string>
     <string name="no_log_items">Der er intet i arkivet endnu</string>
-    <string name="log_delete">Er du sikker på du vi slette experimentet?</string>
+    <string name="log_dialog">Vil du gemme eller slette experimentet?</string>
     <string name="start_logging">Start logging</string>
     <string name="stop_logging">Stop logging</string>
     
@@ -46,7 +46,6 @@
     <!-- Fourier -->
     <string name="fourierDsc">Frekvens spektrum</string>
     
-    <string name="cancel">Annuler</string>
-    <string name="ok">OK</string>
+    <string name="cancel">Annuller</string>
 
 </resources>
