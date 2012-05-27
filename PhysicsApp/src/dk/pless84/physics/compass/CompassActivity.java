@@ -1,103 +1,134 @@
 package dk.pless84.physics.compass;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.TextView;
+import dk.pless84.physics.R;
 
 public class CompassActivity extends Activity implements SensorEventListener {
 
-	Float azimut; // View to draw a compass
+	public static final float ALPHA = 0.2f;
 
-	public class CustomDrawableView extends View {
-		Paint paint = new Paint();
-
-		public CustomDrawableView(Context context) {
-			super(context);
-			paint.setColor(0xff00ff00);
-			paint.setStyle(Style.STROKE);
-			paint.setStrokeWidth(2);
-			paint.setAntiAlias(true);
-		};
-
-		protected void onDraw(Canvas canvas) {
-			int width = getWidth();
-			int height = getHeight();
-			int centerx = width / 2;
-			int centery = height / 2;
-			canvas.drawLine(centerx, 0, centerx, height, paint);
-			canvas.drawLine(0, centery, width, centery, paint);
-			// Rotate the canvas with the azimut
-			if (azimut != null)
-				canvas.rotate(-azimut * 360 / (2 * 3.14159f), centerx, centery);
-			paint.setColor(0xff0000ff);
-			canvas.drawLine(centerx, -1000, centerx, +1000, paint);
-			canvas.drawLine(-1000, centery, 1000, centery, paint);
-			canvas.drawText("N", centerx + 5, centery - 10, paint);
-			canvas.drawText("S", centerx - 10, centery + 15, paint);
-			paint.setColor(0xff00ff00);
-		}
-	}
-
-	CustomDrawableView mCustomDrawableView;
 	private SensorManager mSensorManager;
-	Sensor accelerometer;
-	Sensor magnetometer;
+	private Sensor mAccelerometer;
+	private Sensor mField;
+	private TextView valueView;
+	private TextView directionView;
 
+	private float[] mGravity;
+	private float[] mMagnetic;
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mCustomDrawableView = new CustomDrawableView(this);
-		setContentView(mCustomDrawableView); // Register the sensor listeners
+		setContentView(R.layout.compass);
+
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		accelerometer = mSensorManager
+		mAccelerometer = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		magnetometer = mSensorManager
-				.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+		mField = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+		valueView = (TextView) findViewById(R.id.values);
+		directionView = (TextView) findViewById(R.id.direction);
 	}
 
+	@Override
 	protected void onResume() {
 		super.onResume();
-		mSensorManager.registerListener(this, accelerometer,
+		mSensorManager.registerListener(this, mAccelerometer,
 				SensorManager.SENSOR_DELAY_UI);
-		mSensorManager.registerListener(this, magnetometer,
+		mSensorManager.registerListener(this, mField,
 				SensorManager.SENSOR_DELAY_UI);
 	}
 
+	@Override
 	protected void onPause() {
 		super.onPause();
 		mSensorManager.unregisterListener(this);
 	}
 
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	private void updateDirection() {
+		float[] R = new float[9];
+		// Load rotation matrix into R
+		SensorManager.getRotationMatrix(R, null, mGravity, mMagnetic);
+		// Return the orientation values
+		float[] values = new float[3];
+		SensorManager.getOrientation(R, values);
+		// Convert to degrees
+		for (int i = 0; i < values.length; i++) {
+			Double degrees = (values[i] * 180) / Math.PI;
+			values[i] = degrees.floatValue();
+		}
+		// Display the compass direction
+		directionView.setText(getDirectionFromDegrees(values[0]));
+		// Display the raw values
+		valueView.setText(String.format(
+				"Azimuth: %1$1.2f, Pitch: %2$1.2f, Roll: %3$1.2f", values[0],
+				values[1], values[2]));
 	}
 
-	float[] mGravity;
-	float[] mGeomagnetic;
+	private String getDirectionFromDegrees(float degrees) {
+		if (degrees >= -22.5 && degrees < 22.5) {
+			return "N";
+		}
+		if (degrees >= 22.5 && degrees < 67.5) {
+			return "NE";
+		}
+		if (degrees >= 67.5 && degrees < 112.5) {
+			return "E";
+		}
+		if (degrees >= 112.5 && degrees < 157.5) {
+			return "SE";
+		}
+		if (degrees >= 157.5 && degrees < -157.5) {
+			return "S";
+		}
+		if (degrees >= -157.5 && degrees < -112.5) {
+			return "SW";
+		}
+		if (degrees >= -112.5 && degrees < -67.5) {
+			return "W";
+		}
+		if (degrees >= -67.5 && degrees < -22.5) {
+			return "NW";
+		}
+
+		return null;
+	}
+
+	private float[] lowPass(float[] input, float[] output) {
+		if (output == null) {
+			return input;
+		}
+
+		for (int i = 0; i < input.length; i++) {
+			output[i] = output[i] + ALPHA * (input[i] - output[i]);
+		}
+		return output;
+	}
+
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+	}
 
 	public void onSensorChanged(SensorEvent event) {
-		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
-			mGravity = event.values;
-		if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
-			mGeomagnetic = event.values;
-		if (mGravity != null && mGeomagnetic != null) {
-			float R[] = new float[9];
-			float I[] = new float[9];
-			boolean success = SensorManager.getRotationMatrix(R, I, mGravity,
-					mGeomagnetic);
-			if (success) {
-				float orientation[] = new float[3];
-				SensorManager.getOrientation(R, orientation);
-				azimut = orientation[0]; // orientation contains: azimut, pitch
-											// and roll
-			}
+		switch (event.sensor.getType()) {
+		case Sensor.TYPE_ACCELEROMETER:
+			mGravity = lowPass(event.values.clone(), mGravity);
+			break;
+		case Sensor.TYPE_MAGNETIC_FIELD:
+			mMagnetic = lowPass(event.values.clone(), mMagnetic);
+			break;
+		default:
+			return;
 		}
-		mCustomDrawableView.invalidate();
+
+		if (mGravity != null && mMagnetic != null) {
+			updateDirection();
+		}
 	}
 }

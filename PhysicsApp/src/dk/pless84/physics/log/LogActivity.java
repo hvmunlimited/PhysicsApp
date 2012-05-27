@@ -80,10 +80,10 @@ public class LogActivity extends ListActivity {
 					int position, long id) {
 				AlertDialog.Builder adb = new AlertDialog.Builder(
 						LogActivity.this);
-				adb.setTitle("Slet eller Gem?");
+				adb.setTitle("Slet eller Exporter?");
 				adb.setMessage(getString(R.string.log_dialog));
 				final int pos = position;
-				adb.setNeutralButton("Gem", new AlertDialog.OnClickListener() {
+				adb.setNeutralButton("Exporter", new AlertDialog.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						Experiment exp = experiments.get(pos);
 						Uri uri = dbmgr.genCSVFile(getApplicationContext(), exp);
@@ -93,7 +93,7 @@ public class LogActivity extends ListActivity {
 						i.putExtra(Intent.EXTRA_STREAM, uri);
 						i.setType("application/csv");
 						try {
-							startActivity(Intent.createChooser(i, "Title"));
+							startActivity(Intent.createChooser(i, "Exporter fil"));
 						} catch (ActivityNotFoundException e) {
 							e.printStackTrace();
 						}
