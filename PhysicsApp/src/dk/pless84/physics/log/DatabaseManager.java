@@ -125,6 +125,24 @@ public class DatabaseManager {
 		db.close();
 		return experiments;
 	}
+	
+	public Experiment getExperiment(long id) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+		Experiment experiment = new Experiment();
+
+		Cursor cursor = db.query(TABLE_NAME_EXPERIMENTS, new String[] {
+				TABLE_ROW_ID, TABLE_ROW_TYPE, TABLE_ROW_DATE, TABLE_ROW_RATE },
+				TABLE_ROW_ID + "=" + id, null, null, null, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			experiment = cursorToExperiment(cursor);
+			cursor.moveToNext();
+		}
+		cursor.close();
+		db.close();
+		return experiment;
+	}
 
 	private Experiment cursorToExperiment(Cursor cursor) {
 		Experiment experiment = new Experiment();
@@ -166,9 +184,9 @@ public class DatabaseManager {
 		return log;
 	}
 
-	public Uri genCSVFile(Context context, Experiment exp) {
-		List<ExpLog> list = getAllLogs(exp.getId());
-		File file = new File(Environment.getExternalStorageDirectory().toString() + "/" + exp.getType() + " " + exp.getDate() + ".csv");
+	public Uri genCSVFile(Context context, long id) {
+		List<ExpLog> list = getAllLogs(id);
+		File file = new File(Environment.getExternalStorageDirectory().toString() + "/" + getExperiment(id).getType() + " " + getExperiment(id).getDate() + ".csv");
 		try {
 			FileOutputStream writer = new FileOutputStream(file);
 			

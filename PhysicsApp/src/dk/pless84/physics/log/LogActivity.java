@@ -2,19 +2,14 @@ package dk.pless84.physics.log;
 
 import java.util.List;
 
-import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import dk.pless84.physics.R;
@@ -22,6 +17,9 @@ import dk.pless84.physics.R;
 public class LogActivity extends ListActivity {
 	private DatabaseManager dbmgr;
 	private BaseAdapter adapter;
+	private int requestCode;
+	private int lastPosition;
+	private List<Experiment> experiments;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +28,7 @@ public class LogActivity extends ListActivity {
 
 		dbmgr = new DatabaseManager(this);
 
-		final List<Experiment> experiments = dbmgr.getAllExperiments();
+		experiments = dbmgr.getAllExperiments();
 
 		adapter = new BaseAdapter() {
 
@@ -70,49 +68,22 @@ public class LogActivity extends ListActivity {
 				Intent i = new Intent(getApplicationContext(),
 						SingleListItem.class);
 				i.putExtra("expId", experiments.get(position).getId());
-				startActivity(i);
+				startActivityForResult(i, requestCode);
+				lastPosition = position;
 			}
 		});
+	}
 
-		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				AlertDialog.Builder adb = new AlertDialog.Builder(
-						LogActivity.this);
-				adb.setTitle("Slet eller Exporter?");
-				adb.setMessage(getString(R.string.log_dialog));
-				final int pos = position;
-				adb.setNeutralButton("Exporter", new AlertDialog.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						Experiment exp = experiments.get(pos);
-						Uri uri = dbmgr.genCSVFile(getApplicationContext(), exp);
-						
-						Intent i = new Intent();
-						i.setAction(Intent.ACTION_SEND);
-						i.putExtra(Intent.EXTRA_STREAM, uri);
-						i.setType("application/csv");
-						try {
-							startActivity(Intent.createChooser(i, "Exporter fil"));
-						} catch (ActivityNotFoundException e) {
-							e.printStackTrace();
-						}
-					}
-				});
-				adb.setNegativeButton(getString(R.string.cancel), null);
-				adb.setPositiveButton("Slet", new AlertDialog.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						long expId = experiments.get(pos).getId();
-						dbmgr.deleteExperiment(expId);
-						dbmgr.deleteExpLog(expId);
-						experiments.remove(pos);
-						adapter.notifyDataSetChanged();
-					}
-				});
-				adb.show();
-				
-				return true;
-			}
-		});
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (resultCode) {
+		case 1:
+			experiments.remove(lastPosition);
+			adapter.notifyDataSetChanged();
+			break;
+		default:
+			break;
+		}
 	}
 }
