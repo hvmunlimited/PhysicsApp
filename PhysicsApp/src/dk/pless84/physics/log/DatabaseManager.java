@@ -22,7 +22,7 @@ public class DatabaseManager {
 	private CustomSQLiteOpenHelper helper;
 
 	public static final String DB_NAME = "physicsapp.db";
-	public static final int DB_VERSION = 1;
+	public static final int DB_VERSION = 2;
 
 	public static final String TABLE_NAME_EXPERIMENTS = "experiments";
 	public static final String TABLE_ROW_ID = "id_";
@@ -41,7 +41,7 @@ public class DatabaseManager {
 		helper = new CustomSQLiteOpenHelper(context);
 	}
 
-	public long addExperiment(String type, long rate) {
+	public long addExperiment(long type, long rate) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		long rowId = -1;
 		SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
@@ -129,7 +129,7 @@ public class DatabaseManager {
 	private Experiment cursorToExperiment(Cursor cursor) {
 		Experiment experiment = new Experiment();
 		experiment.setId(cursor.getLong(0));
-		experiment.setType(cursor.getString(1));
+		experiment.setType(cursor.getLong(1));
 		experiment.setDate(cursor.getString(2));
 		experiment.setRate(cursor.getLong(3));
 		return experiment;
@@ -199,7 +199,7 @@ public class DatabaseManager {
 			db.execSQL("create table " + TABLE_NAME_EXPERIMENTS + " ("
 					+ TABLE_ROW_ID
 					+ " integer primary key autoincrement not null,"
-					+ TABLE_ROW_TYPE + " text," + TABLE_ROW_DATE + " text,"
+					+ TABLE_ROW_TYPE + " long," + TABLE_ROW_DATE + " text,"
 					+ TABLE_ROW_RATE + " long" + ");");
 			db.execSQL("create table " + TABLE_NAME_LOGS + " (" + TABLE_ROW_ID
 					+ " integer primary key autoincrement not null,"
@@ -210,7 +210,9 @@ public class DatabaseManager {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+			db.execSQL("drop table if exists " + TABLE_NAME_EXPERIMENTS + ";");
+			db.execSQL("drop table if exists " + TABLE_NAME_LOGS + ";");
+			onCreate(db);
 		}
 	}
 }

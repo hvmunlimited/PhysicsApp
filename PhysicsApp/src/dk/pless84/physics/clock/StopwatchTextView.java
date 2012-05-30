@@ -28,7 +28,7 @@ public class StopwatchTextView implements Runnable {
 	public void run() {
 		time = System.currentTimeMillis();
 		long millis = time - startTime;
-		long seconds = (long) (millis / 1000);
+		long seconds = (millis / 1000);
 
 		widgetStopwatch.setText(String.format("%02d:%02d.%03d", seconds / 60,
 				seconds % 60, millis % 1000));

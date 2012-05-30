@@ -21,9 +21,28 @@
 
     <Button
         android:id="@+id/accStart"
-        android:text="@string/start_logging"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="startLog" />
+        android:onClick="startLog"
+        android:text="@string/start_logging" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/log_interval" />
+
+    <SeekBar
+        android:id="@+id/accRateBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:max="2050"
+        android:progress="50" />
+
+    <TextView
+        android:id="@+id/accRateBarValue"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/log_start_interval" />
 
 </LinearLayout>

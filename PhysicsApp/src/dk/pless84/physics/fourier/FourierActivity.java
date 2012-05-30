@@ -38,7 +38,7 @@ public class FourierActivity extends Activity {
 		transformer = new RealDoubleFFT(blockSize);
 		
 		imageView = (ImageView) findViewById(R.id.fourierView);
-		bitmap = Bitmap.createBitmap((int) 512, (int) 200,
+		bitmap = Bitmap.createBitmap(512, 200,
 				Bitmap.Config.ARGB_8888);
 		canvas = new Canvas(bitmap);
 		paint = new Paint();
@@ -69,7 +69,7 @@ public class FourierActivity extends Activity {
 							blockSize);
 
 					for (int i = 0; i < blockSize && i < bufferReadResult; i++) {
-						toTransform[i] = (double) buffer[i] / 32768.0; // signed
+						toTransform[i] = buffer[i] / 32768.0; // signed
 																		// 16bit
 					}
 
@@ -85,6 +85,7 @@ public class FourierActivity extends Activity {
 			return null;
 		}
 
+		@Override
 		protected void onProgressUpdate(double[]... toTransform) {
 			canvas.drawColor(Color.WHITE);
 

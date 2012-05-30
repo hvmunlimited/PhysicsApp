@@ -26,4 +26,23 @@
         android:layout_height="wrap_content"
         android:onClick="startLog" />
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/log_interval" />
+    
+    <SeekBar
+        android:id="@+id/magRateBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:max="2050"
+        android:progress="50" />
+
+    <TextView
+        android:id="@+id/magRateBarValue"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/log_start_interval" />
+
 </LinearLayout>

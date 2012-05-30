@@ -1,8 +1,10 @@
 package dk.pless84.physics.log;
 
 public class Experiment {
+	public static final int TYPE_ACC = 1;
+	public static final int TYPE_MAGNET = 2;
 	private long id;
-	private String type;
+	private long type;
 	private String date;
 	private long rate;
 	
@@ -14,11 +16,11 @@ public class Experiment {
 		this.id = id;
 	}
 
-	public String getType() {
+	public long getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(long type) {
 		this.type = type;
 	}
 

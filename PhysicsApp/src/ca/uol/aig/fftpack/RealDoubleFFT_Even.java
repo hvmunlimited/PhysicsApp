@@ -131,7 +131,7 @@ public class RealDoubleFFT_Even extends RealDoubleFFT_Mixed
 
         if(n<=3) return;
         ns2=n / 2;
-        dt=pi /(double)(n-1);
+        dt=pi /(n-1);
         for(k=1; k<ns2; k++)
         {
             kc=n-k-1;

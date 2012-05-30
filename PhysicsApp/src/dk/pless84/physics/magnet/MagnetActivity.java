@@ -11,14 +11,19 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import dk.pless84.physics.R;
 import dk.pless84.physics.log.DatabaseManager;
+import dk.pless84.physics.log.Experiment;
 
 public class MagnetActivity extends Activity implements SensorEventListener {
 	private TextView mMagX;
 	private TextView mMagY;
 	private TextView mMagZ;
+	private TextView mRateBarValue;
+	private SeekBar mRateBar;
 
 	private Timer mTimer;
 	private TimerTask mTimerTask;
@@ -39,16 +44,36 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 		setContentView(R.layout.magnet);
 
 		isStop = false;
-
-		mMagX = (TextView) findViewById(R.id.magX);
-		mMagY = (TextView) findViewById(R.id.magY);
-		mMagZ = (TextView) findViewById(R.id.magZ);
+		rate = 50;
 
 		xVal = 0;
 		yVal = 0;
 		zVal = 0;
-		
-		rate = 50;
+
+		mMagX = (TextView) findViewById(R.id.magX);
+		mMagY = (TextView) findViewById(R.id.magY);
+		mMagZ = (TextView) findViewById(R.id.magZ);
+		mRateBarValue = (TextView) findViewById(R.id.magRateBarValue);
+		mRateBar = (SeekBar) findViewById(R.id.magRateBar);
+
+		mRateBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+			}
+
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+			}
+
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				progress = ((int) Math.round(progress / 50)) * 50;
+				seekBar.setProgress(progress);
+				mRateBarValue.setText(String.valueOf(progress) + "ms");
+				rate = progress;
+			}
+		});
 
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		sensorManager.registerListener(this,
@@ -65,13 +90,13 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 			btn.setText(R.string.start_logging);
 			isStop = false;
 		} else {
-			rowId = dbMgr.addExperiment("Mag", rate);
+			rowId = dbMgr.addExperiment(Experiment.TYPE_MAGNET, rate);
 			startTimer();
 			btn.setText(R.string.stop_logging);
 			isStop = true;
 		}
 	}
-	
+
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
 	}

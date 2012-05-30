@@ -77,7 +77,7 @@ class RealDoubleFFT_Mixed
             }
         wtable[0+2*n+offset] = n;
         wtable[1+2*n+offset] = nf;
-        argh=TWO_PI /(double)(n);
+        argh=TWO_PI /(n);
         is=0;
         nfm1=nf-1;
         l1=1;
@@ -93,7 +93,7 @@ class RealDoubleFFT_Mixed
             {
                 ld+=l1;
                 i=is;
-                argld=(double)ld*argh;
+                argld=ld*argh;
 
                 fi=0;
                 for(ii=3; ii<=ido; ii+=2)
@@ -306,7 +306,7 @@ class RealDoubleFFT_Mixed
         double  dc2, ai1, ai2, ar1, ar2, ds2, dcp, arg, dsp, ar1h, ar2h;
         int iw1 = offset;
 
-        arg=TWO_PI / (double)ip;
+        arg=TWO_PI / ip;
         dcp=Math.cos(arg);
         dsp=Math.sin(arg);
         ipph=(ip+1)/ 2;
@@ -528,7 +528,7 @@ class RealDoubleFFT_Mixed
         double  dcp, arg, dsp, ar1h, ar2h;
         int iw1 = offset;
 
-        arg=TWO_PI / (double)ip;
+        arg=TWO_PI / ip;
         dcp=Math.cos(arg);
         dsp=Math.sin(arg);
         nbd=(ido-1)/ 2;

@@ -1,6 +1,5 @@
 package dk.pless84.physics.clock;
 
-import dk.pless84.physics.clock.StopwatchTextView.TimerState;
 import android.os.Handler;
 import android.widget.TextView;
 
@@ -35,7 +34,7 @@ public class CountdownTextview implements Runnable {
 		millis = 0;
 		}
 		
-		long seconds = (long) (millis / 1000);
+		long seconds = (millis / 1000);
 
 		widgetCountdown.setText(String.format("%02d:%02d.%03d", seconds / 60,
 				seconds % 60, millis % 1000));

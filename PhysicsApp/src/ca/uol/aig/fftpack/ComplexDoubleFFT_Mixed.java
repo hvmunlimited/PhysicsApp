@@ -607,7 +607,7 @@ class ComplexDoubleFFT_Mixed
            }
            wtable[0+4*n]=n;
            wtable[1+4*n]=nf;
-           argh=twopi /(double)n;
+           argh=twopi /n;
            i=1;
            l1=1;
            for(k1=1; k1<=nf; k1++)

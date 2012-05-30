@@ -5,27 +5,29 @@ import java.util.List;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import dk.pless84.physics.R;
 
-public class SingleListItem extends ListActivity {
+public class SingleListItem extends ListActivity implements OnMenuItemClickListener {
 	private DatabaseManager dbmgr;
+	private long expId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.log_single_experiment);
 
-		long expId = getIntent().getLongExtra("expId", 0);
+		expId = getIntent().getLongExtra("expId", 0);
 		dbmgr = new DatabaseManager(this);
 
 		final List<ExpLog> logs = dbmgr.getAllLogs(expId);
 
-		// ArrayAdapter<ExpLog> adapter = new ArrayAdapter<ExpLog>(this,
-		// R.layout.log_row, R.id.log_type, logs);
 		setListAdapter(new BaseAdapter() {
 
 			public View getView(int position, View convertView, ViewGroup parent) {
@@ -54,6 +56,32 @@ public class SingleListItem extends ListActivity {
 				return logs.size();
 			}
 		});
+	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(getString(R.string.log_delete));
+		menu.add(getString(R.string.log_export));
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case 1:
+			dbmgr.deleteExpLog(expId);
+			dbmgr.deleteExperiment(expId);
+			getParent().setResult(1);
+			return true;
+		case 2:
+			
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	public boolean onMenuItemClick(MenuItem item) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

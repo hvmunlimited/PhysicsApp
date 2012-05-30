@@ -11,14 +11,19 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import dk.pless84.physics.R;
 import dk.pless84.physics.log.DatabaseManager;
+import dk.pless84.physics.log.Experiment;
 
 public class AccActivity extends Activity implements SensorEventListener {
 	private TextView mAccX;
 	private TextView mAccY;
 	private TextView mAccZ;
+	private TextView mRateBarValue;
+	private SeekBar mRateBar;
 
 	private Timer mTimer;
 	private TimerTask mTimerTask;
@@ -39,16 +44,35 @@ public class AccActivity extends Activity implements SensorEventListener {
 		setContentView(R.layout.acc);
 
 		isStop = false;
-
-		mAccX = (TextView) findViewById(R.id.accX);
-		mAccY = (TextView) findViewById(R.id.accY);
-		mAccZ = (TextView) findViewById(R.id.accZ);
+		rate = 50;
 
 		xVal = 0;
 		yVal = 0;
 		zVal = 0;
-		
-		rate = 50;
+
+		mAccX = (TextView) findViewById(R.id.accX);
+		mAccY = (TextView) findViewById(R.id.accY);
+		mAccZ = (TextView) findViewById(R.id.accZ);
+		mRateBarValue = (TextView) findViewById(R.id.accRateBarValue);
+		mRateBar = (SeekBar) findViewById(R.id.accRateBar);
+
+		mRateBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+			}
+
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+			}
+
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				progress = ((int) Math.round(progress / 50)) * 50;
+				seekBar.setProgress(progress);
+				mRateBarValue.setText(String.valueOf(progress) + "ms");
+				rate = progress;
+			}
+		});
 
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		sensorManager.registerListener(this,
@@ -65,13 +89,13 @@ public class AccActivity extends Activity implements SensorEventListener {
 			btn.setText(R.string.start_logging);
 			isStop = false;
 		} else {
-			rowId = dbMgr.addExperiment("Acc", rate);
+			rowId = dbMgr.addExperiment(Experiment.TYPE_ACC, rate);
 			startTimer();
 			btn.setText(R.string.stop_logging);
 			isStop = true;
 		}
 	}
-	
+
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
 	}

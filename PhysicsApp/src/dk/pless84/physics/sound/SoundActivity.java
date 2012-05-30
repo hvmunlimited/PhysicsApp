@@ -78,7 +78,7 @@ public class SoundActivity extends Activity implements OnClickListener {
 							blockSize);
 
 					for (int i = 0; i < blockSize && i < bufferReadResult; i++) {
-						toTransform[i] = (double) buffer[i] / 32768.0; // signed 16bit
+						toTransform[i] = buffer[i] / 32768.0; // signed 16bit
 					}
 
 					transformer.ft(toTransform);
@@ -93,6 +93,7 @@ public class SoundActivity extends Activity implements OnClickListener {
 			return null;
 		}
 
+		@Override
 		protected void onProgressUpdate(double[]... toTransform) {
 			canvas.drawColor(Color.BLACK);
 

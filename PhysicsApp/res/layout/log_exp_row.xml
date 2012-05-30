@@ -4,18 +4,17 @@
     android:layout_height="wrap_content"
     android:background="#eee" >
 
-    <TextView
-        android:id="@+id/log_id"
-        style="@style/listRow" />
-
-    <TextView
+    <ImageView
         android:id="@+id/log_type"
-        style="@style/listRow" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/log_type_image"
+        android:padding="5dp" />
 
     <TextView
         android:id="@+id/log_date"
         style="@style/listRow" />
-    
+
     <TextView
         android:id="@+id/log_rate"
         style="@style/listRow" />

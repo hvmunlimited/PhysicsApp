@@ -183,7 +183,7 @@ public class RealDoubleFFT_Even_Odd extends RealDoubleFFT_Mixed
         final double pih=Math.PI/2.0D; //1.57079632679491;
         int     k;
         double  dt;
-        dt=pih / (double)n;
+        dt=pih / n;
         for(k=0; k<n; k++) wtable[k]=Math.cos((k+1)*dt);
         rffti1(n, wtable, n);
     }
