@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_gravity="center"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
+    android:layout_gravity="center"
     android:background="#eee"
-    >
-
+    android:orientation="vertical" >
+
     <TextView
         android:id="@+id/lightX"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" 
-        android:textColor="#000"
-        android:text="0"
-        android:textSize="40dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-         />
-    
-        <TextView
+        android:textColor="#000"
+        android:textSize="40dp" />
+
+    <TextView
         android:id="@+id/lux"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" 
-        android:textColor="#000"
-        android:text="Lux"
-        android:textSize="40dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-         />
+        android:text="Lux"
+        android:textColor="#000"
+        android:textSize="40dp" />
 
 </LinearLayout>

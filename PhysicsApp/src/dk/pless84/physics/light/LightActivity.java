@@ -23,7 +23,7 @@ public class LightActivity extends Activity implements SensorEventListener {
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		sensorManager.registerListener(this,
 				sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
-				SensorManager.SENSOR_DELAY_NORMAL);
+				SensorManager.SENSOR_DELAY_FASTEST);
 	}
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {

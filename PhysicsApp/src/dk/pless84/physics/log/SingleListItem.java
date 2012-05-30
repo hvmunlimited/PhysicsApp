@@ -2,19 +2,23 @@ package dk.pless84.physics.log;
 
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import dk.pless84.physics.R;
 
-public class SingleListItem extends ListActivity implements OnMenuItemClickListener {
+public class SingleListItem extends ListActivity {
 	private DatabaseManager dbmgr;
 	private long expId;
 
@@ -60,28 +64,47 @@ public class SingleListItem extends ListActivity implements OnMenuItemClickListe
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(getString(R.string.log_delete));
-		menu.add(getString(R.string.log_export));
+		menu.addSubMenu(Menu.NONE, 0, Menu.NONE, "Exporter Log");
+		menu.addSubMenu(Menu.NONE, 1, Menu.NONE, "Slet Log");
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case 1:
-			dbmgr.deleteExpLog(expId);
-			dbmgr.deleteExperiment(expId);
-			getParent().setResult(1);
-			return true;
-		case 2:
+		case 0:
+			Uri uri = dbmgr.genCSVFile(getApplicationContext(), expId);
 			
-			return true;
+			Intent i = new Intent(Intent.ACTION_SEND);
+			i.putExtra(Intent.EXTRA_STREAM, uri);
+			i.setType("application/csv");
+			try {
+				startActivity(Intent.createChooser(i, "Exporter fil"));
+			} catch (ActivityNotFoundException e) {
+				e.printStackTrace();
+			}
+			break;
+		case 1:
+			AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+			alertDialog.setTitle("Slet Log?");
+			alertDialog.setMessage(getText(R.string.log_dialog));
+			alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+				
+				public void onClick(DialogInterface dialog, int which) {
+					dbmgr.deleteExperiment(expId);
+					dbmgr.deleteExpLog(expId);
+					setResult(1);
+					finish();
+				}
+			});
+			alertDialog.setButton2("Annuller", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					return;
+				}
+			});
+			alertDialog.show();
+			break;
 		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	public boolean onMenuItemClick(MenuItem item) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 }
