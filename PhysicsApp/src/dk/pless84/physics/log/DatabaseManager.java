@@ -125,7 +125,7 @@ public class DatabaseManager {
 		db.close();
 		return experiments;
 	}
-	
+
 	public Experiment getExperiment(long id) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		Experiment experiment = new Experiment();
@@ -186,10 +186,15 @@ public class DatabaseManager {
 
 	public Uri genCSVFile(Context context, long id) {
 		List<ExpLog> list = getAllLogs(id);
-		File file = new File(Environment.getExternalStorageDirectory().toString() + "/" + getExperiment(id).getType() + " " + getExperiment(id).getDate() + ".csv");
+		File file = new File(Environment.getExternalStorageDirectory()
+				.toString()
+				+ "/"
+				+ getExperiment(id).getType()
+				+ " "
+				+ getExperiment(id).getDate() + ".csv");
 		try {
 			FileOutputStream writer = new FileOutputStream(file);
-			
+
 			writer.write(("time,x,y,z\n").getBytes());
 			for (int i = 0; i < list.size(); i++) {
 				ExpLog log = list.get(i);
@@ -204,7 +209,7 @@ public class DatabaseManager {
 		}
 		return Uri.fromFile(file);
 	}
-	
+
 	private class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 		public CustomSQLiteOpenHelper(Context context) {
 			super(context, DB_NAME, null, DB_VERSION);

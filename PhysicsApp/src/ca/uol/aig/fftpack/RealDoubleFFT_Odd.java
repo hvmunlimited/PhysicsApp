@@ -148,7 +148,7 @@ public class RealDoubleFFT_Odd extends RealDoubleFFT_Mixed
 
           if(n<=1) return;
           ns2=n / 2;
-          dt=pi /(n+1);
+          dt=pi /(double)(n+1);
           for(k=0; k<ns2; k++)
 	      wtable[k]=2*Math.sin((k+1)*dt);
           rffti1(n+1, wtable, ns2);

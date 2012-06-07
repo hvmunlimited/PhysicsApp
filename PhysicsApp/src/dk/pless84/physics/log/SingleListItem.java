@@ -64,8 +64,8 @@ public class SingleListItem extends ListActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.addSubMenu(Menu.NONE, 0, Menu.NONE, "Exporter Log");
-		menu.addSubMenu(Menu.NONE, 1, Menu.NONE, "Slet Log");
+		menu.add(Menu.NONE, 0, Menu.NONE, getString(R.string.log_export));
+		menu.add(Menu.NONE, 1, Menu.NONE, getString(R.string.log_delete));
 		return true;
 	}
 

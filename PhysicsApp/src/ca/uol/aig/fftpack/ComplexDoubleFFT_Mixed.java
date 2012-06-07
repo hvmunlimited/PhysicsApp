@@ -300,12 +300,13 @@ class ComplexDoubleFFT_Mixed
                        final double cc[], double c1[], double c2[], double ch[], double ch2[],
                        final double wtable[], int offset, int isign)
      {
-          int idij, idlj, idot, ipph, i, j, k, l, jc, lc, ik, idj, idl, inc, idp;
+          int idij, idlj, idot, ipph, i, j, k, l, jc, lc, ik, nt, idj, idl, inc, idp;
           double  wai, war;
           int iw1;
 
           iw1 = offset;
     	  idot=ido / 2;
+          nt=ip*idl1;
           ipph=(ip+1)/ 2;
           idp=ip*ido;
           if(ido>=l1)
@@ -607,7 +608,7 @@ class ComplexDoubleFFT_Mixed
            }
            wtable[0+4*n]=n;
            wtable[1+4*n]=nf;
-           argh=twopi /n;
+           argh=twopi /(double)n;
            i=1;
            l1=1;
            for(k1=1; k1<=nf; k1++)

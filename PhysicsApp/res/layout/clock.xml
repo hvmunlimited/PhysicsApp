@@ -1,78 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/timerBackground"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/startclockbt"
+        <TextView
+            android:id="@+id/timer"
+            style="@style/timerText"
+            android:text="@string/timer" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonArea"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="startChronometer"
-        android:text="@string/start" />
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/stopclockbt"
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/startButton"
+            style="@style/buttonText"
+            android:onClick="onClick"
+            android:text="@string/startText" />
+
+        <Button
+            android:id="@+id/resetButton"
+            style="@style/buttonText"
+            android:onClick="onClick"
+            android:text="@string/resetText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lapList"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="stopChronometer"
-        android:text="@string/stop" />
+        android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/countdowntime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/startcountdownbt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startChronometer"
-        android:text="@string/start" />
-
-    <Button
-        android:id="@+id/resetcountdownbt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="resetChronometer"
-        android:text="@string/reset" />
-
-    <Button
-        android:id="@+id/plussecondcountdownbt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="plussecond"
-        android:text="@string/plus" />
-
-    <Button
-        android:id="@+id/plusminutecountdownbt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="plusminute"
-        android:text="@string/plus" />
-
-    <TextView
-        android:id="@+id/timecountdownbt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/minussecondcountdownbt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="minussecond"
-        android:text="@string/minus" />
-
-    <Button
-        android:id="@+id/minusminutecountdownbt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="minusminute"
-        android:text="@string/minus" />
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>

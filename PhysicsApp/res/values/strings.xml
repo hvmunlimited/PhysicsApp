@@ -33,13 +33,12 @@
     <string name="log_export">Exporter log</string>
     
     <!-- Clock -->
-    <string name="stop">Stop</string>
-    <string name="start">Start</string>
-    <string name="reset">Reset</string>
-    <string name="resume">Resume</string>
-    <string name="pause">Pause</string>
-    <string name="plus">+</string>
-    <string name="minus">-</string>
+    <string name="timer">00:00:00.000</string>
+    <string name="startText">start</string>
+    <string name="resetText">reset</string>
+    <string name="pauseText">pause</string>
+    <string name="resumeText">resume</string>
+    <string name="lapText">lap</string>
     
     <!-- Flash -->
     <string name="pickacolor">Vælg en farve</string>

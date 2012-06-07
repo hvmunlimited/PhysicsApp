@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="icons" parent="@android:style/TextAppearance.Widget.TextView">
+    <style name="icons">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#222</item>
@@ -13,7 +13,7 @@
         <item name="android:padding">5dp</item>
     </style>
 
-    <style name="listRow" parent="@android:style/TextAppearance.Widget.TextView">
+    <style name="listRow">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#222</item>
@@ -24,39 +24,23 @@
     <style name="timerText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#004254</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">55sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:shadowColor">#87CCE4</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">2</item>
-        <item name="android:shadowRadius">1</item>
+        <item name="android:textSize">50sp</item>
     </style>
 
     <style name="buttonText">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">150dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">35sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">1</item>
-        <item name="android:shadowRadius">1</item>
     </style>
-
-    <style name="backgroundText">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textSize">45sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#77787A</item>
-        <item name="android:shadowColor">#BBBDBE</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">1</item>
-        <item name="android:shadowRadius">1</item>
+    
+    <style name="lapRow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">5sp</item>
     </style>
 
 </resources>
