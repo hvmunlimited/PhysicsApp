@@ -23,7 +23,9 @@ public class FlashActivity extends Activity {
 		colorPicker = new ColorPickerDialog(this, new OnColorChangedListener() {
 
 			public void colorChanged(int color) {
-				((TextView) findViewById(R.id.bg)).setBackgroundColor(color);
+				TextView flashBg = (TextView) findViewById(R.id.flashBg);
+				flashBg.setBackgroundColor(color);
+				flashBg.setText(getString(R.string.clicktochange) + "\n(" + ")");
 			}
 		}, Color.WHITE);
 
@@ -47,6 +49,21 @@ public class FlashActivity extends Activity {
 
 	public void changeColor(View view) {
 		colorPicker.show();
-		((TextView) findViewById(R.id.bg)).setText("");
+	}
+
+	@Override
+	protected void onDestroy() {
+		// Turn off auto screen brightness if on
+		try {
+			if (Settings.System.getInt(getContentResolver(),
+					Settings.System.SCREEN_BRIGHTNESS_MODE) == Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL) {
+				Settings.System.putInt(getContentResolver(),
+						Settings.System.SCREEN_BRIGHTNESS_MODE,
+						Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+			}
+		} catch (SettingNotFoundException e) {
+			e.printStackTrace();
+		}
+		super.onDestroy();
 	}
 }

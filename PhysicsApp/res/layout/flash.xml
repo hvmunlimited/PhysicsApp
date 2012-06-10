@@ -5,14 +5,14 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/bg"
+        android:id="@+id/flashBg"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#fff"
         android:clickable="true"
         android:gravity="center"
         android:onClick="changeColor"
-        android:textColor="#333"
-        android:text="@string/clicktochange" />
+        android:text="@string/clicktochange"
+        android:textColor="#333" />
 
 </LinearLayout>

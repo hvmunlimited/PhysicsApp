@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -14,6 +15,10 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
+import com.drakenclimber.graph.GraphData;
+import com.drakenclimber.graph.LineGraphView;
+
 import dk.pless84.physics.R;
 import dk.pless84.physics.log.DatabaseManager;
 import dk.pless84.physics.log.Experiment;
@@ -37,22 +42,43 @@ public class AccActivity extends Activity implements SensorEventListener {
 	private long rowId;
 	private boolean isStop;
 	private long rate;
+	
+	public static final int ACCEL_DATA_COUNT = 128;
+
+	/* widgets */
+	private LineGraphView mAccelGraphView;
+
+	/* data for the accelerometer graph */
+	private GraphData mXAccelData;
+	private GraphData mYAccelData;
+	private GraphData mZAccelData;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.acc);
-
+		
 		isStop = false;
 		rate = 50;
 
 		xVal = 0;
 		yVal = 0;
 		zVal = 0;
+		
+		/* initialize the accelerometer graph and its data */
+		mXAccelData = new GraphData(null, Color.RED, ACCEL_DATA_COUNT);
+		mYAccelData = new GraphData(null, Color.MAGENTA, ACCEL_DATA_COUNT);
+		mZAccelData = new GraphData(null, Color.GREEN, ACCEL_DATA_COUNT);
+
+		mAccelGraphView = (LineGraphView) findViewById(R.id.accelGraph);
+		mAccelGraphView.addDataSet(mXAccelData);
+		mAccelGraphView.addDataSet(mYAccelData);
+		mAccelGraphView.addDataSet(mZAccelData);
 
 		mAccX = (TextView) findViewById(R.id.accX);
 		mAccY = (TextView) findViewById(R.id.accY);
 		mAccZ = (TextView) findViewById(R.id.accZ);
+		
 		mRateBarValue = (TextView) findViewById(R.id.accRateBarValue);
 		mRateBar = (SeekBar) findViewById(R.id.accRateBar);
 
@@ -105,9 +131,16 @@ public class AccActivity extends Activity implements SensorEventListener {
 			xVal = event.values[0];
 			yVal = event.values[1];
 			zVal = event.values[2];
+			
 			mAccX.setText(xVal + "");
 			mAccY.setText(yVal + "");
 			mAccZ.setText(zVal + "");
+			
+			mXAccelData.appendValue(xVal);
+			mYAccelData.appendValue(yVal);
+			mZAccelData.appendValue(zVal);
+			
+			mAccelGraphView.invalidate();
 		}
 	}
 
@@ -136,5 +169,13 @@ public class AccActivity extends Activity implements SensorEventListener {
 			mTimerTask.cancel();
 			mTimerTask = null;
 		}
+	}
+	
+	/** method to handle the destruction of this activity */
+	@Override
+	public void onDestroy() {
+		stopTimer();
+		sensorManager.unregisterListener(this);
+		super.onDestroy();
 	}
 }

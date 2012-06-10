@@ -3,7 +3,11 @@ package dk.pless84.physics.magnet;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.drakenclimber.graph.GraphData;
+import com.drakenclimber.graph.LineGraphView;
+
 import android.app.Activity;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -37,6 +41,16 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 	private long rowId;
 	private boolean isStop;
 	private long rate;
+	
+	public static final int ACCEL_DATA_COUNT = 128;
+
+	/* widgets */
+	private LineGraphView mMagGraphView;
+
+	/* data for the accelerometer graph */
+	private GraphData mXMagData;
+	private GraphData mYMagData;
+	private GraphData mZMagData;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +64,20 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 		yVal = 0;
 		zVal = 0;
 
+		/* initialize the accelerometer graph and its data */
+		mXMagData = new GraphData(null, Color.RED, ACCEL_DATA_COUNT);
+		mYMagData = new GraphData(null, Color.MAGENTA, ACCEL_DATA_COUNT);
+		mZMagData = new GraphData(null, Color.GREEN, ACCEL_DATA_COUNT);
+
+		mMagGraphView = (LineGraphView) findViewById(R.id.magGraph);
+		mMagGraphView.addDataSet(mXMagData);
+		mMagGraphView.addDataSet(mYMagData);
+		mMagGraphView.addDataSet(mZMagData);
+		
 		mMagX = (TextView) findViewById(R.id.magX);
 		mMagY = (TextView) findViewById(R.id.magY);
 		mMagZ = (TextView) findViewById(R.id.magZ);
+		
 		mRateBarValue = (TextView) findViewById(R.id.magRateBarValue);
 		mRateBar = (SeekBar) findViewById(R.id.magRateBar);
 
@@ -106,9 +131,16 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 			xVal = event.values[0];
 			yVal = event.values[1];
 			zVal = event.values[2];
+			
 			mMagX.setText(xVal + "");
 			mMagY.setText(yVal + "");
 			mMagZ.setText(zVal + "");
+			
+			mXMagData.appendValue(event.values[0]);
+			mYMagData.appendValue(event.values[1]);
+			mZMagData.appendValue(event.values[2]);
+			
+			mMagGraphView.invalidate();
 		}
 	}
 
@@ -137,5 +169,13 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 			mTimerTask.cancel();
 			mTimerTask = null;
 		}
+	}
+	
+	/** method to handle the destruction of this activity */
+	@Override
+	public void onDestroy() {
+		stopTimer();
+		sensorManager.unregisterListener(this);
+		super.onDestroy();
 	}
 }

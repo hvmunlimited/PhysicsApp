@@ -1,100 +1,85 @@
 package dk.pless84.physics.compass;
 
-import android.app.Activity;
+import java.util.logging.Logger;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
-public class CompassActivity extends Activity implements SensorEventListener {
+import com.jwetherell.compass.data.GlobalData;
 
-	private SensorManager mSensorManager;
-	private Rose rose;
-	public static final float ALPHA = 0.2f;
+import dk.pless84.physics.R;
 
-	private Sensor mAccelerometer;
-	private Sensor mField;
 
-	private float[] mGravity;
-	private float[] mMagnetic;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		// Create new instance of custom Rose and set it on the screen
-		rose = new Rose(this);
-		setContentView(rose);
-		
-		// Get sensor manager and sensor
-		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		mField = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-	}
-	
-	@Override
-	public void onResume() {
-		super.onResume();
-		mSensorManager.registerListener(this, mAccelerometer,
-				SensorManager.SENSOR_DELAY_UI);
-		mSensorManager.registerListener(this, mField,
-				SensorManager.SENSOR_DELAY_UI);
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		mSensorManager.unregisterListener(this);
-	}
-	
-	private void updateDirection() {
-		float[] R = new float[9];
-		// Load rotation matrix into R
-		SensorManager.getRotationMatrix(R, null, mGravity, mMagnetic);
-		// Remap coordinates
-		//SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, R);
-		// Return the orientation values
-		float[] values = new float[3];
-		SensorManager.getOrientation(R, values);
-		// Convert to degrees
-		for (int i = 0; i < values.length; i++) {
-			Double degrees = (values[i] * 180) / Math.PI;
-			values[i] = degrees.floatValue();
-		}
-		rose.setDirection(values[0]);
-	}
+/**
+ * This class extends the SensorsActivity and is designed tie the CompassView and Sensors together.
+ * 
+ * @author Justin Wetherell <phishman3579@gmail.com>
+ */
+public class CompassActivity extends SensorActivity {
+	private static final Logger logger = Logger.getLogger(CompassActivity.class.getSimpleName());
 
-	private float[] lowPass(float[] input, float[] output) {
-		if (output == null) {
-			return input;
-		}
+    private static TextView text = null;
+    private static View compassView = null;
 
-		for (int i = 0; i < input.length; i++) {
-			output[i] = output[i] + ALPHA * (input[i] - output[i]);
-		}
-		return output;
-	}
-	
-	// Ignore accuracy changes
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-	}
-	
-	// Listen to sensor and provide output
-	public void onSensorChanged(SensorEvent event) {
-		switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER:
-			mGravity = lowPass(event.values.clone(), mGravity);
-			break;
-		case Sensor.TYPE_MAGNETIC_FIELD:
-			mMagnetic = lowPass(event.values.clone(), mMagnetic);
-			break;
-		default:
-			return;
-		}
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        logger.info("onCreate()");
 
-		if (mGravity != null && mMagnetic != null) {
-			updateDirection();
-		}
-	}
+        setContentView(R.layout.compass2);
+
+        text = (TextView) findViewById(R.id.text);
+        compassView = findViewById(R.id.compass);
+    }
+    
+    @Override
+    public void onDestroy() {
+    	super.onDestroy();
+    	logger.info("onDestroy()");
+    }
+    
+    @Override
+    public void onStart() {
+    	super.onStart();
+    	logger.info("onStart()");
+    }
+    
+    @Override
+    public void onStop() {
+    	super.onStop();
+    	logger.info("onStop()");
+    }
+    
+    @Override
+    public void onSensorChanged(SensorEvent evt) {
+        super.onSensorChanged(evt);
+
+        if (    evt.sensor.getType() == Sensor.TYPE_ACCELEROMETER || 
+                evt.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD
+        ) {
+        	//Tell the compass to update it's graphics
+            if (compassView!=null) compassView.postInvalidate();
+        }
+
+        //Update the direction text
+        updateText(GlobalData.getBearing());
+    }
+    
+    private static void updateText(float bearing) {
+        int range = (int) (bearing / (360f / 16f)); 
+        String  dirTxt = "";
+        if (range == 15 || range == 0) dirTxt = "N"; 
+        else if (range == 1 || range == 2) dirTxt = "NE"; 
+        else if (range == 3 || range == 4) dirTxt = "E"; 
+        else if (range == 5 || range == 6) dirTxt = "SE";
+        else if (range == 7 || range == 8) dirTxt= "S"; 
+        else if (range == 9 || range == 10) dirTxt = "SW"; 
+        else if (range == 11 || range == 12) dirTxt = "W"; 
+        else if (range == 13 || range == 14) dirTxt = "NW";
+        text.setText(""+((int) bearing)+((char)176)+" "+dirTxt);
+    }
 }

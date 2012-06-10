@@ -14,6 +14,7 @@ import android.view.View;
 import dk.pless84.physics.R;
 
 public class ColorPickerDialog extends Dialog {
+	
 	public interface OnColorChangedListener {
 		void colorChanged(int color);
 	}
@@ -110,8 +111,6 @@ public class ColorPickerDialog extends Dialog {
 			return Color.argb(a, r, g, b);
 		}
 
-		private static final float PI = 3.1415926f;
-
 		@Override
 		public boolean onTouchEvent(MotionEvent event) {
 			float x = event.getX() - CENTER_X;
@@ -135,7 +134,7 @@ public class ColorPickerDialog extends Dialog {
 				} else {
 					float angle = (float) java.lang.Math.atan2(y, x);
 					// need to turn angle [-PI ... PI] into unit [0....1]
-					float unit = angle / (2 * PI);
+					float unit = (float) (angle / (2 * Math.PI));
 					if (unit < 0) {
 						unit += 1;
 					}

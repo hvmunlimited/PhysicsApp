@@ -2,35 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/background"
+    android:padding="5dp"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/magX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        style="@style/listRow" />
 
     <TextView
         android:id="@+id/magY"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        style="@style/listRow" />
 
     <TextView
         android:id="@+id/magZ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    
+        style="@style/listRow" />
+
     <Button
         android:id="@+id/magStart"
-        android:text="@string/start_logging"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startLog" />
+        style="@style/listRow"
+        android:onClick="startLog"
+        android:text="@string/start_logging" />
 
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        style="@style/listRow"
         android:text="@string/log_interval" />
-    
+
     <SeekBar
         android:id="@+id/magRateBar"
         android:layout_width="fill_parent"
@@ -40,9 +37,16 @@
 
     <TextView
         android:id="@+id/magRateBarValue"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        style="@style/listRow"
         android:gravity="center"
         android:text="@string/log_start_interval" />
+
+    <com.drakenclimber.graph.LineGraphView
+        android:id="@+id/magGraph"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        autoScale="true"
+        title="X, Y, Z Mag (m/s^2)" />
 
 </LinearLayout>
