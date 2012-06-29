@@ -50,6 +50,11 @@
     <!-- Fourier -->
     <string name="fourierDsc">Frekvens spektrum</string>
     
+    <!-- Lux -->
+    <string name="lux">Lux</string>
+    
+    <string name="zero">0</string>
+    
     <string name="cancel">Annuller</string>
 
 </resources>

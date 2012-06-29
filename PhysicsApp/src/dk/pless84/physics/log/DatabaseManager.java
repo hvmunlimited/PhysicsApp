@@ -62,13 +62,10 @@ public class DatabaseManager {
 		return rowId;
 	}
 
-	public void addLogRow(long expId, float x, float y, float z) {
+	public void addLogRow(long expId, float x, float y, float z, float time) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-
-		SimpleDateFormat s = new SimpleDateFormat("hh:mm:ss.SSS");
-		String time = s.format(new Date());
 
 		values.put(TABLE_ROW_EXPID, expId);
 		values.put(TABLE_ROW_TIME, time);
@@ -193,17 +190,17 @@ public class DatabaseManager {
 				+ " "
 				+ getExperiment(id).getDate() + ".csv");
 		try {
-			FileOutputStream writer = new FileOutputStream(file);
+			FileOutputStream outStr = new FileOutputStream(file);
 
-			writer.write(("time,x,y,z\n").getBytes());
+			outStr.write((TABLE_ROW_TIME + ";" + TABLE_ROW_XVAL + ";" + TABLE_ROW_YVAL + ";" + TABLE_ROW_ZVAL + ",\n").getBytes());
 			for (int i = 0; i < list.size(); i++) {
 				ExpLog log = list.get(i);
-				String str = log.getTime() + "," + log.getxVal() + ","
-						+ log.getyVal() + "," + log.getzVal() + "\n";
-				writer.write(str.getBytes());
+				String str = log.getTime() + ";" + log.getxVal() + ";"
+						+ log.getyVal() + ";" + log.getzVal() + "\n";
+				outStr.write(str.getBytes());
 			}
-			writer.flush();
-			writer.close();
+			outStr.flush();
+			outStr.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

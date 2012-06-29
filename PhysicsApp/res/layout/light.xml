@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_gravity="center"
-    android:background="#eee"
+    android:gravity="center"
+    android:background="@color/background"
     android:orientation="vertical" >
 
     <TextView
@@ -11,16 +11,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="#000"
-        android:textSize="40dp" />
+        android:textColor="#222"
+        android:textSize="50dp"
+        android:text="@string/zero" />
 
     <TextView
         android:id="@+id/lux"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Lux"
-        android:textColor="#000"
-        android:textSize="40dp" />
+        android:text="@string/lux"
+        android:textColor="#222"
+        android:textSize="50dp" />
 
 </LinearLayout>

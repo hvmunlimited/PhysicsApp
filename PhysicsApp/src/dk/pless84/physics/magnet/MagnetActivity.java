@@ -150,9 +150,11 @@ public class MagnetActivity extends Activity implements SensorEventListener {
 		}
 		if (mTimerTask == null) {
 			mTimerTask = new TimerTask() {
+				int time = 0;
 				@Override
 				public void run() {
-					dbMgr.addLogRow(rowId, xVal, yVal, zVal);
+					dbMgr.addLogRow(rowId, xVal, yVal, zVal, time);
+					time += rate;
 				}
 			};
 		}

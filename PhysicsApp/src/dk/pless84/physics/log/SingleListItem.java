@@ -37,14 +37,10 @@ public class SingleListItem extends ListActivity {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 				View view = inflater.inflate(R.layout.log_explog_row, null);
-				TextView txtV = (TextView) view.findViewById(R.id.log_time);
-				txtV.setText(logs.get(position).getTime());
-				txtV = (TextView) view.findViewById(R.id.log_xVal);
-				txtV.setText(logs.get(position).getxVal() + "");
-				txtV = (TextView) view.findViewById(R.id.log_yVal);
-				txtV.setText(logs.get(position).getyVal() + "");
-				txtV = (TextView) view.findViewById(R.id.log_zVal);
-				txtV.setText(logs.get(position).getzVal() + "");
+
+				TextView txtV = (TextView) view.findViewById(R.id.log_row);
+				txtV.setText(getItem(position).toString());
+
 				return view;
 			}
 
@@ -74,7 +70,7 @@ public class SingleListItem extends ListActivity {
 		switch (item.getItemId()) {
 		case 0:
 			Uri uri = dbmgr.genCSVFile(getApplicationContext(), expId);
-			
+
 			Intent i = new Intent(Intent.ACTION_SEND);
 			i.putExtra(Intent.EXTRA_STREAM, uri);
 			i.setType("application/csv");
@@ -89,7 +85,7 @@ public class SingleListItem extends ListActivity {
 			alertDialog.setTitle("Slet Log?");
 			alertDialog.setMessage(getText(R.string.log_dialog));
 			alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-				
+
 				public void onClick(DialogInterface dialog, int which) {
 					dbmgr.deleteExperiment(expId);
 					dbmgr.deleteExpLog(expId);
@@ -97,11 +93,12 @@ public class SingleListItem extends ListActivity {
 					finish();
 				}
 			});
-			alertDialog.setButton2("Annuller", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					return;
-				}
-			});
+			alertDialog.setButton2("Annuller",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							return;
+						}
+					});
 			alertDialog.show();
 			break;
 		}

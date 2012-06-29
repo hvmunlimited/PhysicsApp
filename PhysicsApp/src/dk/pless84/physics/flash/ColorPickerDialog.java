@@ -27,26 +27,29 @@ public class ColorPickerDialog extends Dialog {
 		private Paint mCenterPaint;
 		private final int[] mColors;
 		private OnColorChangedListener mListener;
+		private boolean mTrackingCenter;
+		private boolean mHighlightCenter;
+		
+		public static final int CENTER_X = 200;
+		public static final int CENTER_Y = 200;
+		public static final int CENTER_RADIUS = 72;
 
 		ColorPickerView(Context c, OnColorChangedListener l, int color) {
 			super(c);
 			mListener = l;
-			mColors = new int[] { 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF,
-					0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000 };
+			mColors = new int[] { 0xFFFFFFFF, 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF,
+					0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000, 0xFFFFFFFF };
 			Shader s = new SweepGradient(0, 0, mColors, null);
 
 			mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mPaint.setShader(s);
 			mPaint.setStyle(Paint.Style.STROKE);
-			mPaint.setStrokeWidth(32);
+			mPaint.setStrokeWidth(72);
 
 			mCenterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mCenterPaint.setColor(color);
 			mCenterPaint.setStrokeWidth(5);
 		}
-
-		private boolean mTrackingCenter;
-		private boolean mHighlightCenter;
 
 		@Override
 		protected void onDraw(Canvas canvas) {
@@ -79,10 +82,6 @@ public class ColorPickerDialog extends Dialog {
 		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 			setMeasuredDimension(CENTER_X * 2, CENTER_Y * 2);
 		}
-
-		private static final int CENTER_X = 100;
-		private static final int CENTER_Y = 100;
-		private static final int CENTER_RADIUS = 32;
 
 		private int ave(int s, int d, float p) {
 			return s + java.lang.Math.round(p * (d - s));

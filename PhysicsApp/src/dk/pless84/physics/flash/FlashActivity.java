@@ -3,8 +3,6 @@ package dk.pless84.physics.flash;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.provider.Settings.SettingNotFoundException;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -25,45 +23,17 @@ public class FlashActivity extends Activity {
 			public void colorChanged(int color) {
 				TextView flashBg = (TextView) findViewById(R.id.flashBg);
 				flashBg.setBackgroundColor(color);
-				flashBg.setText(getString(R.string.clicktochange) + "\n(" + ")");
 			}
 		}, Color.WHITE);
 
-		// Turn off auto screen brightness if on
-		try {
-			if (Settings.System.getInt(getContentResolver(),
-					Settings.System.SCREEN_BRIGHTNESS_MODE) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
-				Settings.System.putInt(getContentResolver(),
-						Settings.System.SCREEN_BRIGHTNESS_MODE,
-						Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-			}
-		} catch (SettingNotFoundException e) {
-			e.printStackTrace();
-		}
-
 		// Set screen brightness to 100%
 		WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
-		layoutParams.screenBrightness = 1.0F; // set 100% brightness
+
+		layoutParams.screenBrightness = 1; // set 100% brightness
 		getWindow().setAttributes(layoutParams);
 	}
 
 	public void changeColor(View view) {
 		colorPicker.show();
-	}
-
-	@Override
-	protected void onDestroy() {
-		// Turn off auto screen brightness if on
-		try {
-			if (Settings.System.getInt(getContentResolver(),
-					Settings.System.SCREEN_BRIGHTNESS_MODE) == Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL) {
-				Settings.System.putInt(getContentResolver(),
-						Settings.System.SCREEN_BRIGHTNESS_MODE,
-						Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
-			}
-		} catch (SettingNotFoundException e) {
-			e.printStackTrace();
-		}
-		super.onDestroy();
 	}
 }

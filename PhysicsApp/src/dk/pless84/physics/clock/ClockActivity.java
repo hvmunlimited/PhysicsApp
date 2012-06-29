@@ -91,7 +91,7 @@ public class ClockActivity extends ListActivity {
 	}
 
 	private Runnable startTimer = new Runnable() {
-		
+
 		public void run() {
 			elapsedTime = System.nanoTime() - startTime;
 
@@ -143,12 +143,14 @@ public class ClockActivity extends ListActivity {
 		if (milliseconds.length() <= 1) {
 			milliseconds = "00";
 		}
-		milliseconds = milliseconds.substring(milliseconds.length() - 3,
-				milliseconds.length());
+		if (milliseconds.length() > 3) {
+			milliseconds = milliseconds.substring(milliseconds.length() - 3,
+					milliseconds.length());
+		}
 
 		return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 	}
-	
+
 	private class ClockArrayAdapter extends ArrayAdapter<String> {
 		private final Context context;
 		private final List<String> values;
@@ -166,7 +168,7 @@ public class ClockActivity extends ListActivity {
 			View rowView = inflater.inflate(R.layout.clock_row, parent, false);
 			TextView lapTime = (TextView) rowView.findViewById(R.id.lap_time);
 			TextView lapNo = (TextView) rowView.findViewById(R.id.lap_no);
-			
+
 			lapTime.setText(values.get(position));
 			lapNo.setText(position + "");
 			return rowView;
