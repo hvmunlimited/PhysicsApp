@@ -3,19 +3,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/background"
-    android:padding="5dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="5dp" >
 
-    <TextView
-        android:id="@+id/magX"
-        style="@style/listRow" />
-
-    <TextView
-        android:id="@+id/magY"
-        style="@style/listRow" />
-
-    <TextView
-        android:id="@+id/magZ"
+    <EditText
+        android:id="@+id/expName"
+        android:inputType="text"
         style="@style/listRow" />
 
     <Button

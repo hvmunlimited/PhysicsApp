@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import dk.pless84.physics.acc.AccActivity;
 import dk.pless84.physics.angle.AngleActivity;
 import dk.pless84.physics.clock.ClockActivity;
 import dk.pless84.physics.compass.CompassActivity;
@@ -15,8 +14,7 @@ import dk.pless84.physics.convert.ConvertActivity;
 import dk.pless84.physics.flash.FlashActivity;
 import dk.pless84.physics.fourier.FourierActivity;
 import dk.pless84.physics.light.LightActivity;
-import dk.pless84.physics.log.LogActivity;
-import dk.pless84.physics.magnet.MagnetActivity;
+import dk.pless84.physics.log.ExperimentActivity;
 import dk.pless84.physics.osci.OsciActivity;
 import dk.pless84.physics.sound.SoundActivity;
 
@@ -43,7 +41,8 @@ public class Main extends Activity implements OnClickListener {
     	Intent i = new Intent();
     	switch (view.getId()) {
 		case R.id.acceleration:
-			i = new Intent(this, AccActivity.class);
+			i = new Intent(this, SensorGraphingActivity.class);
+			i.putExtra("sensorType", 1);
 			break;
 		case R.id.light:
 			i = new Intent(this, LightActivity.class);
@@ -55,7 +54,8 @@ public class Main extends Activity implements OnClickListener {
 			i = new Intent(this, FourierActivity.class);
 			break;
 		case R.id.magnet:
-			i = new Intent(this, MagnetActivity.class);
+			i = new Intent(this, SensorGraphingActivity.class);
+			i.putExtra("sensorType", 2);
 			break;
 		case R.id.flash:
 			i = new Intent(this, FlashActivity.class);
@@ -76,10 +76,7 @@ public class Main extends Activity implements OnClickListener {
 			i = new Intent(this, AngleActivity.class);
 			break;
 		case R.id.log:
-			i = new Intent(this, LogActivity.class);
-			break;
-		default:
-			i = new Intent();
+			i = new Intent(this, ExperimentActivity.class);
 			break;
 		}
     	startActivity(i);

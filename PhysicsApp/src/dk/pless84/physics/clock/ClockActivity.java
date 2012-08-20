@@ -170,7 +170,7 @@ public class ClockActivity extends ListActivity {
 			TextView lapNo = (TextView) rowView.findViewById(R.id.lap_no);
 
 			lapTime.setText(values.get(position));
-			lapNo.setText(position + "");
+			lapNo.setText(position + 1 + "");
 			return rowView;
 		}
 	}

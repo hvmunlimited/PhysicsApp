@@ -15,12 +15,10 @@ public class AngleActivity extends Activity implements SensorEventListener {
 
 	private SensorManager mSensorManager;
 	private Sensor mAccelerometer;
-	private Sensor mField;
 	private TextView valueView;
 	private TextView directionView;
 
 	private float[] mGravity;
-	private float[] mMagnetic;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +28,6 @@ public class AngleActivity extends Activity implements SensorEventListener {
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		mAccelerometer = mSensorManager
 				.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		mField = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
 		valueView = (TextView) findViewById(R.id.angleValues);
 		directionView = (TextView) findViewById(R.id.angle);
@@ -40,8 +37,6 @@ public class AngleActivity extends Activity implements SensorEventListener {
 	protected void onResume() {
 		super.onResume();
 		mSensorManager.registerListener(this, mAccelerometer,
-				SensorManager.SENSOR_DELAY_UI);
-		mSensorManager.registerListener(this, mField,
 				SensorManager.SENSOR_DELAY_UI);
 	}
 
@@ -54,18 +49,19 @@ public class AngleActivity extends Activity implements SensorEventListener {
 	private void updateDirection() {
 		float[] R = new float[9];
 		// Load rotation matrix into R
-		SensorManager.getRotationMatrix(R, null, mGravity, mMagnetic);
+		SensorManager.getRotationMatrix(R, null, mGravity, null);
 		// Remap coordinates
 		SensorManager.remapCoordinateSystem(R, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, R);
 		// Return the orientation values
 		float[] values = new float[3];
 		SensorManager.getOrientation(R, values);
+		
 		// Convert to degrees
 		for (int i = 0; i < values.length; i++) {
 			Double degrees = (values[i] * 180) / Math.PI;
 			values[i] = degrees.floatValue();
 		}
-		// Display the compass direction
+		
 		directionView.setText(values[1] + "");
 		// Display the raw values
 		valueView.setText(String.format(
@@ -85,22 +81,14 @@ public class AngleActivity extends Activity implements SensorEventListener {
 	}
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-		// TODO Auto-generated method stub
 	}
 
 	public void onSensorChanged(SensorEvent event) {
-		switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER:
+		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 			mGravity = lowPass(event.values.clone(), mGravity);
-			break;
-		case Sensor.TYPE_MAGNETIC_FIELD:
-			mMagnetic = lowPass(event.values.clone(), mMagnetic);
-			break;
-		default:
-			return;
 		}
 
-		if (mGravity != null && mMagnetic != null) {
+		if (mGravity != null) {
 			updateDirection();
 		}
 	}

@@ -9,56 +9,89 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import dk.pless84.physics.R;
 
 public class ColorPickerDialog extends Dialog {
-	
-	public interface OnColorChangedListener {
-		void colorChanged(int color);
-	}
-
 	private OnColorChangedListener mListener;
 	private int mInitialColor;
+
+	public ColorPickerDialog(Context context, OnColorChangedListener listener,
+			int initialColor) {
+		super(context);
+
+		mListener = listener;
+		mInitialColor = initialColor;
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		OnColorChangedListener l = new OnColorChangedListener() {
+			public void colorChanged(int color) {
+				mListener.colorChanged(color);
+				dismiss();
+			}
+		};
+
+		LinearLayout layout = new LinearLayout(getContext());
+		layout.setOrientation(LinearLayout.VERTICAL);
+		layout.setGravity(Gravity.CENTER);
+		layout.setPadding(10, 10, 10, 10);
+		layout.addView(new ColorPickerView(getContext(), l, mInitialColor),
+				new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.WRAP_CONTENT,
+						LinearLayout.LayoutParams.WRAP_CONTENT));
+
+		setContentView(layout);
+		setTitle(R.string.pickacolor);
+	}
 
 	private static class ColorPickerView extends View {
 		private Paint mPaint;
 		private Paint mCenterPaint;
-		private final int[] mColors;
+		private int[] mColors;
 		private OnColorChangedListener mListener;
 		private boolean mTrackingCenter;
 		private boolean mHighlightCenter;
-		
-		public static final int CENTER_X = 200;
-		public static final int CENTER_Y = 200;
-		public static final int CENTER_RADIUS = 72;
+		private int centerX;
+		private int centerY;
+		private int centerR;
+		private float r;
+		private RectF mRectF;
 
 		ColorPickerView(Context c, OnColorChangedListener l, int color) {
 			super(c);
 			mListener = l;
-			mColors = new int[] { 0xFFFFFFFF, 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF,
-					0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000, 0xFFFFFFFF };
+			mColors = new int[] { 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF,
+					0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000 };
 			Shader s = new SweepGradient(0, 0, mColors, null);
 
 			mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mPaint.setShader(s);
 			mPaint.setStyle(Paint.Style.STROKE);
-			mPaint.setStrokeWidth(72);
+			mPaint.setStrokeWidth(32);
 
 			mCenterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mCenterPaint.setColor(color);
 			mCenterPaint.setStrokeWidth(5);
+
+			centerX = 100;
+			centerY = 100;
+			centerR = 32;
+			r = centerX - mPaint.getStrokeWidth() * 0.5f;
+			mRectF = new RectF(-r, -r, r, r);
 		}
 
 		@Override
 		protected void onDraw(Canvas canvas) {
-			float r = CENTER_X - mPaint.getStrokeWidth() * 0.5f;
+			canvas.translate(centerX, centerX);
 
-			canvas.translate(CENTER_X, CENTER_X);
-
-			canvas.drawOval(new RectF(-r, -r, r, r), mPaint);
-			canvas.drawCircle(0, 0, CENTER_RADIUS, mCenterPaint);
+			canvas.drawOval(mRectF, mPaint);
+			canvas.drawCircle(0, 0, centerR, mCenterPaint);
 
 			if (mTrackingCenter) {
 				int c = mCenterPaint.getColor();
@@ -70,8 +103,7 @@ public class ColorPickerDialog extends Dialog {
 					mCenterPaint.setAlpha(0x80);
 				}
 				canvas.drawCircle(0, 0,
-						CENTER_RADIUS + mCenterPaint.getStrokeWidth(),
-						mCenterPaint);
+						centerR + mCenterPaint.getStrokeWidth(), mCenterPaint);
 
 				mCenterPaint.setStyle(Paint.Style.FILL);
 				mCenterPaint.setColor(c);
@@ -80,22 +112,20 @@ public class ColorPickerDialog extends Dialog {
 
 		@Override
 		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-			setMeasuredDimension(CENTER_X * 2, CENTER_Y * 2);
+			setMeasuredDimension(centerX * 2, centerY * 2);
 		}
 
 		private int ave(int s, int d, float p) {
-			return s + java.lang.Math.round(p * (d - s));
+			return s + Math.round(p * (d - s));
 		}
 
-		private int interpColor(int colors[], float unit) {
-			if (unit <= 0) {
+		private int interpColor(int colors[], double unit) {
+			if (unit <= 0)
 				return colors[0];
-			}
-			if (unit >= 1) {
+			if (unit >= 1)
 				return colors[colors.length - 1];
-			}
 
-			float p = unit * (colors.length - 1);
+			float p = (float) (unit * (colors.length - 1));
 			int i = (int) p;
 			p -= i;
 
@@ -112,9 +142,9 @@ public class ColorPickerDialog extends Dialog {
 
 		@Override
 		public boolean onTouchEvent(MotionEvent event) {
-			float x = event.getX() - CENTER_X;
-			float y = event.getY() - CENTER_Y;
-			boolean inCenter = java.lang.Math.sqrt(x * x + y * y) <= CENTER_RADIUS;
+			double x = event.getX() - centerX;
+			double y = event.getY() - centerY;
+			boolean inCenter = Math.sqrt(x * x + y * y) <= centerR;
 
 			switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
@@ -131,9 +161,7 @@ public class ColorPickerDialog extends Dialog {
 						invalidate();
 					}
 				} else {
-					float angle = (float) java.lang.Math.atan2(y, x);
-					// need to turn angle [-PI ... PI] into unit [0....1]
-					float unit = (float) (angle / (2 * Math.PI));
+					double unit = Math.atan2(y, x) / (2 * Math.PI);
 					if (unit < 0) {
 						unit += 1;
 					}
@@ -155,25 +183,7 @@ public class ColorPickerDialog extends Dialog {
 		}
 	}
 
-	public ColorPickerDialog(Context context, OnColorChangedListener listener,
-			int initialColor) {
-		super(context);
-
-		mListener = listener;
-		mInitialColor = initialColor;
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		OnColorChangedListener l = new OnColorChangedListener() {
-			public void colorChanged(int color) {
-				mListener.colorChanged(color);
-				dismiss();
-			}
-		};
-
-		setContentView(new ColorPickerView(getContext(), l, mInitialColor));
-		setTitle(R.string.pickacolor);
+	public interface OnColorChangedListener {
+		void colorChanged(int color);
 	}
 }

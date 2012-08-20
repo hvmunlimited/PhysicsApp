@@ -36,5 +36,4 @@ public class LightActivity extends Activity implements SensorEventListener {
 			mLightX.setText(event.values[0] + "");
 		}
 	}
-
 }

@@ -25,20 +25,22 @@
     <string name="no_log_items">Der er intet i arkivet endnu</string>
     <string name="log_dialog">Vil du gemme eller slette eksperimentet?</string>
     <string name="log_type_image">Eksperiment type ikon</string>
-    <string name="start_logging">Start logging</string>
-    <string name="stop_logging">Stop logging</string>
-    <string name="log_interval">Sæt logging interval</string>
+    <string name="start_logging">Start</string>
+    <string name="stop_logging">Stop</string>
+    <string name="log_interval">Lognings interval:</string>
     <string name="log_start_interval">50ms</string>
+    <string name="log_delay">Start efter:</string>
+    <string name="log_start_delay">0s</string>
     <string name="log_delete">Slet log</string>
     <string name="log_export">Exporter log</string>
     
     <!-- Clock -->
     <string name="timer">00:00:00.000</string>
     <string name="startText">start</string>
-    <string name="resetText">reset</string>
+    <string name="resetText">nulstil</string>
     <string name="pauseText">pause</string>
-    <string name="resumeText">resume</string>
-    <string name="lapText">lap</string>
+    <string name="resumeText">fortsæt</string>
+    <string name="lapText">laptid</string>
     
     <!-- Flash -->
     <string name="pickacolor">Vælg en farve</string>
@@ -55,6 +57,10 @@
     
     <string name="zero">0</string>
     
+    <string name="zeroDeg">0\u00B0</string>
+    
     <string name="cancel">Annuller</string>
+    
+    <string name="expName">Navngiv experimentet</string>
 
 </resources>

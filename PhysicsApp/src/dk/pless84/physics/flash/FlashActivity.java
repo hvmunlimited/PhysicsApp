@@ -7,33 +7,26 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import dk.pless84.physics.R;
-import dk.pless84.physics.flash.ColorPickerDialog.OnColorChangedListener;
 
-public class FlashActivity extends Activity {
-
-	private ColorPickerDialog colorPicker;
+public class FlashActivity extends Activity implements
+		ColorPickerDialog.OnColorChangedListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.flash);
 
-		colorPicker = new ColorPickerDialog(this, new OnColorChangedListener() {
-
-			public void colorChanged(int color) {
-				TextView flashBg = (TextView) findViewById(R.id.flashBg);
-				flashBg.setBackgroundColor(color);
-			}
-		}, Color.WHITE);
-
-		// Set screen brightness to 100%
-		WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
-
-		layoutParams.screenBrightness = 1; // set 100% brightness
-		getWindow().setAttributes(layoutParams);
+		getWindow().getAttributes().screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_FULL; // set 100% brightness
+		getWindow().setAttributes(getWindow().getAttributes());
 	}
 
 	public void changeColor(View view) {
-		colorPicker.show();
+         new ColorPickerDialog(this, this,
+                 Color.WHITE).show();
 	}
+	
+    public void colorChanged(int color) {
+        TextView flashBg = (TextView) findViewById(R.id.flashBg);
+		flashBg.setBackgroundColor(color);
+    }
 }
