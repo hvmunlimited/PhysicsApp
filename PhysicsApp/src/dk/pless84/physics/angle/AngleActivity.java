@@ -31,6 +31,8 @@ public class AngleActivity extends Activity implements SensorEventListener {
 
 		valueView = (TextView) findViewById(R.id.angleValues);
 		directionView = (TextView) findViewById(R.id.angle);
+		
+		mGravity = new float[3];
 	}
 
 	@Override

@@ -28,7 +28,7 @@
  * @brief   Class for managing an array of graph data
  *
  */
-package com.drakenclimber.graph;
+package dk.pless84.physics;
 
 import java.util.ArrayList;
 

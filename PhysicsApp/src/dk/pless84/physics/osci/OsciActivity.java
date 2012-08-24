@@ -11,5 +11,4 @@ public class OsciActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.osci);
 	}
-
 }

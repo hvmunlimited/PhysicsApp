@@ -28,9 +28,10 @@
  * @brief   Android widget for drawing a line graph
  *
  */
-package com.drakenclimber.graph;
+package dk.pless84.physics;
 
 import java.util.ArrayList;
+
 
 import android.content.Context;
 import android.graphics.Canvas;
